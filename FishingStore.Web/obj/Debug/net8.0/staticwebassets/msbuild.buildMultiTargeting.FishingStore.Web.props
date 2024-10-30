@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\FishingStore.Web.props" />
+</Project>

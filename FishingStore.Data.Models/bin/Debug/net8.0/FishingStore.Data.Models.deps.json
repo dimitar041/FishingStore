@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "FishingStore.Data.Models/1.0.0": {
+        "runtime": {
+          "FishingStore.Data.Models.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "FishingStore.Data.Models/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
