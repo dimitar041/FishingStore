@@ -1665,6 +1665,16 @@
           }
         }
       },
+      "FishingStore.Common/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/FishingStore.Common.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/FishingStore.Common.dll": {}
+        }
+      },
       "FishingStore.Data/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
@@ -1684,6 +1694,10 @@
       "FishingStore.Data.Models/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "FishingStore.Common": "1.0.0",
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "8.0.10"
+        },
         "compile": {
           "bin/placeholder/FishingStore.Data.Models.dll": {}
         },
@@ -4501,6 +4515,11 @@
         "useSharedDesignerContext.txt"
       ]
     },
+    "FishingStore.Common/1.0.0": {
+      "type": "project",
+      "path": "../FishingStore.Common/FishingStore.Common.csproj",
+      "msbuildProject": "../FishingStore.Common/FishingStore.Common.csproj"
+    },
     "FishingStore.Data/1.0.0": {
       "type": "project",
       "path": "../FishingStore.Data/FishingStore.Data.csproj",
@@ -4528,11 +4547,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\GitHub Repos\\FishingStore\\FishingStoreProject\\FishingStore.Web\\FishingStore.Web.csproj",
+      "projectUniqueName": "D:\\GitHub Repos\\FishingStore\\FishingStoreProject\\FishingStore\\FishingStore.Web\\FishingStore.Web.csproj",
       "projectName": "FishingStore.Web",
-      "projectPath": "D:\\GitHub Repos\\FishingStore\\FishingStoreProject\\FishingStore.Web\\FishingStore.Web.csproj",
+      "projectPath": "D:\\GitHub Repos\\FishingStore\\FishingStoreProject\\FishingStore\\FishingStore.Web\\FishingStore.Web.csproj",
       "packagesPath": "C:\\Users\\Димитър\\.nuget\\packages\\",
-      "outputPath": "D:\\GitHub Repos\\FishingStore\\FishingStoreProject\\FishingStore.Web\\obj\\",
+      "outputPath": "D:\\GitHub Repos\\FishingStore\\FishingStoreProject\\FishingStore\\FishingStore.Web\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Димитър\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -4550,8 +4569,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "D:\\GitHub Repos\\FishingStore\\FishingStoreProject\\FishingStore.Data\\FishingStore.Data.csproj": {
-              "projectPath": "D:\\GitHub Repos\\FishingStore\\FishingStoreProject\\FishingStore.Data\\FishingStore.Data.csproj"
+            "D:\\GitHub Repos\\FishingStore\\FishingStoreProject\\FishingStore\\FishingStore.Data\\FishingStore.Data.csproj": {
+              "projectPath": "D:\\GitHub Repos\\FishingStore\\FishingStoreProject\\FishingStore\\FishingStore.Data\\FishingStore.Data.csproj"
             }
           }
         }

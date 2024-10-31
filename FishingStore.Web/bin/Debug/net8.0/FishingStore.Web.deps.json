@@ -989,6 +989,14 @@
           }
         }
       },
+      "FishingStore.Common/1.0.0": {
+        "runtime": {
+          "FishingStore.Common.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
       "FishingStore.Data/1.0.0": {
         "dependencies": {
           "FishingStore.Data.Models": "1.0.0",
@@ -1004,6 +1012,10 @@
         }
       },
       "FishingStore.Data.Models/1.0.0": {
+        "dependencies": {
+          "FishingStore.Common": "1.0.0",
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "8.0.10"
+        },
         "runtime": {
           "FishingStore.Data.Models.dll": {
             "assemblyVersion": "1.0.0",
@@ -1613,6 +1625,11 @@
       "sha512": "sha512-IXoJOXIqc39AIe+CIR7koBtRGMiCt/LPM3lI+PELtDIy9XdyeSrwXFdWV9dzJ2Awl0paLWUaknLxFQ5HpHZUog==",
       "path": "system.windows.extensions/6.0.0",
       "hashPath": "system.windows.extensions.6.0.0.nupkg.sha512"
+    },
+    "FishingStore.Common/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     },
     "FishingStore.Data/1.0.0": {
       "type": "project",
