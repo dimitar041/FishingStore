@@ -2,6 +2,7 @@
 
 using FishingStore.Data.Models.Enums;
 using static FishingStore.Common.EntityValidationConstants.Line;
+using static FishingStore.Common.ApplicationConstants;
 
 namespace FishingStore.Data.Models
 {
@@ -41,5 +42,10 @@ namespace FishingStore.Data.Models
 
         [Required]
         public FishingType FishingType { get; set; }
+
+        [MaxLength(ImgUrlMaxLength)]
+        public string? ImageUrl { get; set; }
+
+        public bool IsDeleted { get; set; }
     }
 }

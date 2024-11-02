@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FishingStore.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -61,7 +61,9 @@ namespace FishingStore.Data.Migrations
                     MaxWeight = table.Column<double>(type: "float", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    FishingType = table.Column<int>(type: "int", nullable: false)
+                    FishingType = table.Column<int>(type: "int", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -80,7 +82,9 @@ namespace FishingStore.Data.Migrations
                     LineType = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    FishingType = table.Column<int>(type: "int", nullable: false)
+                    FishingType = table.Column<int>(type: "int", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -98,7 +102,9 @@ namespace FishingStore.Data.Migrations
                     SpoolCapacity = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    FishingType = table.Column<int>(type: "int", nullable: false)
+                    FishingType = table.Column<int>(type: "int", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -112,11 +118,13 @@ namespace FishingStore.Data.Migrations
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Brand = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Model = table.Column<string>(type: "nvarchar(35)", maxLength: 35, nullable: false),
-                    Length = table.Column<double>(type: "float", nullable: false),
-                    Action = table.Column<double>(type: "float", nullable: false),
+                    Length = table.Column<int>(type: "int", nullable: false),
+                    Action = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    FishingType = table.Column<int>(type: "int", nullable: false)
+                    FishingType = table.Column<int>(type: "int", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -235,11 +243,13 @@ namespace FishingStore.Data.Migrations
                 {
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserGuid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RodGuid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ReelGuid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    LineGuid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    HookGuid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    RodGuid = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ReelGuid = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    LineGuid = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    HookGuid = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -254,26 +264,22 @@ namespace FishingStore.Data.Migrations
                         name: "FK_FullSets_Hooks_HookGuid",
                         column: x => x.HookGuid,
                         principalTable: "Hooks",
-                        principalColumn: "Guid",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Guid");
                     table.ForeignKey(
                         name: "FK_FullSets_Lines_LineGuid",
                         column: x => x.LineGuid,
                         principalTable: "Lines",
-                        principalColumn: "Guid",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Guid");
                     table.ForeignKey(
                         name: "FK_FullSets_Reels_ReelGuid",
                         column: x => x.ReelGuid,
                         principalTable: "Reels",
-                        principalColumn: "Guid",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Guid");
                     table.ForeignKey(
                         name: "FK_FullSets_Rods_RodGuid",
                         column: x => x.RodGuid,
                         principalTable: "Rods",
-                        principalColumn: "Guid",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Guid");
                 });
 
             migrationBuilder.CreateIndex(

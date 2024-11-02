@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
+using static FishingStore.Common.ApplicationConstants;
+
 namespace FishingStore.Data.Models
 {
     public class FullSet
@@ -19,30 +21,31 @@ namespace FishingStore.Data.Models
         [ForeignKey(nameof(UserGuid))]
         public virtual ApplicationUser ApplicationUser { get; set; } = null!;
 
-        [Required]
-        public Guid RodGuid { get; set; }
+        public Guid? RodGuid { get; set; }
 
         [ForeignKey(nameof(RodGuid))]
-        public virtual Rod Rod { get; set; } = null!;
+        public virtual Rod? Rod { get; set; }
 
-        [Required]
-        public Guid ReelGuid { get; set; }
+        public Guid? ReelGuid { get; set; }
 
         [ForeignKey(nameof(ReelGuid))]
-        public virtual Reel Reel { get; set; } = null!;
+        public virtual Reel? Reel { get; set; }
 
-        [Required]
-        public Guid LineGuid { get; set; }
+        public Guid? LineGuid { get; set; }
 
         [ForeignKey(nameof(LineGuid))]
-        public virtual Line Line { get; set; } = null!;
+        public virtual Line? Line { get; set; }
 
-        [Required]
-        public Guid HookGuid { get; set; }
+        public Guid? HookGuid { get; set; }
 
         [ForeignKey(nameof(HookGuid))] 
-        public virtual Hook Hook { get; set; } = null!;
+        public virtual Hook? Hook { get; set; }
 
         public decimal Price { get; set; }
+
+        [MaxLength(ImgUrlMaxLength)]
+        public string? ImageUrl { get; set; }
+
+        public bool IsDeleted { get; set; }
     }
 }

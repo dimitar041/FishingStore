@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FishingStore.Data.Migrations
 {
     [DbContext(typeof(FishingStoreContext))]
-    [Migration("20241031110555_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20241102094123_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -97,19 +97,26 @@ namespace FishingStore.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("HookGuid")
+                    b.Property<Guid?>("HookGuid")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("LineGuid")
+                    b.Property<string>("ImageUrl")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("LineGuid")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<Guid>("ReelGuid")
+                    b.Property<Guid?>("ReelGuid")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("RodGuid")
+                    b.Property<Guid?>("RodGuid")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("UserGuid")
@@ -148,6 +155,13 @@ namespace FishingStore.Data.Migrations
 
                     b.Property<int>("FishingType")
                         .HasColumnType("int");
+
+                    b.Property<string>("ImageUrl")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<double>("MaxWeight")
                         .HasColumnType("float");
@@ -190,6 +204,13 @@ namespace FishingStore.Data.Migrations
                     b.Property<int>("FishingType")
                         .HasColumnType("int");
 
+                    b.Property<string>("ImageUrl")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<int>("LineType")
                         .HasColumnType("int");
 
@@ -228,6 +249,13 @@ namespace FishingStore.Data.Migrations
                     b.Property<int>("FishingType")
                         .HasColumnType("int");
 
+                    b.Property<string>("ImageUrl")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Model")
                         .IsRequired()
                         .HasMaxLength(35)
@@ -253,8 +281,8 @@ namespace FishingStore.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<double>("Action")
-                        .HasColumnType("float");
+                    b.Property<int>("Action")
+                        .HasColumnType("int");
 
                     b.Property<string>("Brand")
                         .IsRequired()
@@ -269,8 +297,15 @@ namespace FishingStore.Data.Migrations
                     b.Property<int>("FishingType")
                         .HasColumnType("int");
 
-                    b.Property<double>("Length")
-                        .HasColumnType("float");
+                    b.Property<string>("ImageUrl")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Length")
+                        .HasColumnType("int");
 
                     b.Property<string>("Model")
                         .IsRequired()
@@ -424,27 +459,19 @@ namespace FishingStore.Data.Migrations
                 {
                     b.HasOne("FishingStore.Data.Models.Hook", "Hook")
                         .WithMany()
-                        .HasForeignKey("HookGuid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("HookGuid");
 
                     b.HasOne("FishingStore.Data.Models.Line", "Line")
                         .WithMany()
-                        .HasForeignKey("LineGuid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LineGuid");
 
                     b.HasOne("FishingStore.Data.Models.Reel", "Reel")
                         .WithMany()
-                        .HasForeignKey("ReelGuid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ReelGuid");
 
                     b.HasOne("FishingStore.Data.Models.Rod", "Rod")
                         .WithMany()
-                        .HasForeignKey("RodGuid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RodGuid");
 
                     b.HasOne("FishingStore.Data.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("FullSets")

@@ -2,6 +2,7 @@
 
 using FishingStore.Data.Models.Enums;
 using static FishingStore.Common.EntityValidationConstants.Rod;
+using static FishingStore.Common.ApplicationConstants;
 
 namespace FishingStore.Data.Models
 {
@@ -24,10 +25,10 @@ namespace FishingStore.Data.Models
         public string Model { get; set; } = null!;
 
         [Required]
-        public double Length { get; set; }
+        public int Length { get; set; }
 
         [Required]
-        public double Action { get; set; }
+        public int Action { get; set; }
 
         [Required] 
         [MaxLength(DescriptionMaxValue)]
@@ -38,5 +39,10 @@ namespace FishingStore.Data.Models
 
         [Required]
         public FishingType FishingType { get; set; }
+
+        [MaxLength(ImgUrlMaxLength)]
+        public string? ImageUrl { get; set; }
+
+        public bool IsDeleted { get; set; }
     }
 }
