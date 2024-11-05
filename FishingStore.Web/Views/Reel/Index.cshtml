@@ -1,0 +1,32 @@
+﻿@model IEnumerable<FishingStore.Web.ViewModels.ReelIndexViewModel>
+
+@{
+    ViewBag.Title = "Fishing Reels";
+}
+
+<h2>Fishing Reels</h2>
+
+<div class="row">
+    @foreach (var reel in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="@reel.ImageUrl" alt="@reel.Brand @reel.Model" class="card-img-top" style="height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">@reel.Brand @reel.Model</h5>
+                    <p class="card-text">
+                        <strong>Size:</strong> @reel.ReelSize<br />
+                        <strong>Spool Capacity:</strong> @reel.SpoolCapacity m<br />
+                        <strong>Price:</strong> @reel.Price.ToString("C")
+                        <strong>Fishing Type:</strong> @reel.FishingType
+                    </p>
+                    <p class="card-text">@reel.Description</p>
+                    <input type="hidden" value="@reel.Guid" class="rod-guid" />
+
+                    <a href="@Url.Action("Details", "Reel", new { id = reel.Guid })" class="btn btn-primary">Details</a>
+                    <a href="#" class="btn btn-secondary">Add to Cart</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

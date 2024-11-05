@@ -1,4 +1,4 @@
-namespace FishingStore.Web.Models
+namespace FishingStore.Web.ViewModels
 {
     public class ErrorViewModel
     {

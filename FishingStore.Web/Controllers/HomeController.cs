@@ -1,4 +1,4 @@
-using FishingStore.Web.Models;
+using FishingStore.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 

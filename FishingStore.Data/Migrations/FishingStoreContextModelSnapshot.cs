@@ -131,7 +131,7 @@ namespace FishingStore.Data.Migrations
 
                     b.HasIndex("UserGuid");
 
-                    b.ToTable("FullSets");
+                    b.ToTable("FullSets", (string)null);
                 });
 
             modelBuilder.Entity("FishingStore.Data.Models.Hook", b =>
@@ -176,7 +176,7 @@ namespace FishingStore.Data.Migrations
 
                     b.HasKey("Guid");
 
-                    b.ToTable("Hooks");
+                    b.ToTable("Hooks", (string)null);
 
                     b.HasData(
                         new
@@ -876,7 +876,7 @@ namespace FishingStore.Data.Migrations
 
                     b.HasKey("Guid");
 
-                    b.ToTable("Lines");
+                    b.ToTable("Lines", (string)null);
 
                     b.HasData(
                         new
@@ -1343,7 +1343,7 @@ namespace FishingStore.Data.Migrations
 
                     b.HasKey("Guid");
 
-                    b.ToTable("Reels");
+                    b.ToTable("Reels", (string)null);
 
                     b.HasData(
                         new
@@ -2040,7 +2040,7 @@ namespace FishingStore.Data.Migrations
 
                     b.HasKey("Guid");
 
-                    b.ToTable("Rods");
+                    b.ToTable("Rods", (string)null);
 
                     b.HasData(
                         new

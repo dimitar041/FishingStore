@@ -20,15 +20,15 @@ namespace FishingStore.Data
 
         }
 
-        public virtual DbSet<Rod> Rods { get; set; }
+        public virtual DbSet<Rod> Rods { get; set; } = null!;
 
-        public virtual DbSet<Reel> Reels { get; set; }
+        public virtual DbSet<Reel> Reels { get; set; } = null!;
 
-        public virtual DbSet<Line> Lines { get; set; }
+        public virtual DbSet<Line> Lines { get; set; } = null!;
 
-        public virtual DbSet<Hook> Hooks { get; set; }
+        public virtual DbSet<Hook> Hooks { get; set; } = null!;
 
-        public virtual DbSet<FullSet> FullSets { get; set; }
+        public virtual DbSet<FullSet> FullSets { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -1,0 +1,32 @@
+﻿@model IEnumerable<FishingStore.Web.ViewModels.HookIndexViewModel>
+
+@{
+    ViewBag.Title = "Fishing Hooks";
+}
+
+<h2>Fishing Hooks</h2>
+
+<div class="row">
+    @foreach (var hook in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="@hook.ImageUrl" alt="@hook.Brand @hook.Model" class="card-img-top" style="height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">@hook.Brand @hook.Model</h5>
+                    <p class="card-text">
+                        <strong>Size:</strong> @hook.Size<br />
+                        <strong>Max Weight:</strong> @hook.MaxWeight kg<br />
+                        <strong>Price:</strong> @hook.Price.ToString("C")
+                        <strong>Fishing Type:</strong> @hook.FishingType
+                    </p>
+                    <p class="card-text">@hook.Description</p>
+                    <input type="hidden" value="@hook.Guid" class="rod-guid" />
+
+                    <a href="@Url.Action("Details", "Hook", new { id = hook.Guid })" class="btn btn-primary">Details</a>
+                    <a href="#" class="btn btn-secondary">Add to Cart</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
