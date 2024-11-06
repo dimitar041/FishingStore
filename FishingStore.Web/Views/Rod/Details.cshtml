@@ -1,5 +1,42 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using FishingStore.Common
+@model FishingStore.Web.ViewModels.RodIndexViewModel
+
 @{
+    ViewData["Title"] = "Rod Details";
 }
+
+<h2>Rod Details</h2>
+
+<div class="rod-detail">
+    <h3>@Model.Brand - @Model.Model</h3>
+
+    <div class="rod-info">
+        <p><strong>Brand:</strong> @Model.Brand</p>
+        <p><strong>Model:</strong> @Model.Model</p>
+        <p><strong>Length:</strong> @Model.Length cm</p>
+        <p><strong>Action:</strong> @Model.Action</p>
+        <p><strong>Description:</strong> @Model.Description</p>
+        <p><strong>Price:</strong> @Model.Price.ToString("C")</p> 
+        <p><strong>Fishing Type:</strong> @Model.FishingType</p>
+
+        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+        {
+            <div class="image-container">
+                <strong>Image:</strong>
+                <img src="@Model.ImageUrl" alt="@Model.Brand @Model.Model" style="max-width: 100%; max-height: 300px;" />
+            </div>
+        }
+        else
+        {
+            <div class="image-container">
+                <strong>Image:</strong>
+                <img src="@EntityValidationConstants.Rod.NoImgRodUrl" alt="No image found!" style="max-width: 100%; max-height: 300px;" />
+            </div>
+        }
+    </div>
+
+    <div class="action-buttons">
+        <a href="@Url.Action("Edit", "Rod", new { id = Model.Guid })" class="btn btn-primary">Edit</a>
+        <a href="@Url.Action("Index", "Rod")" class="btn btn-secondary">Back to List</a>
+    </div>
+</div>
