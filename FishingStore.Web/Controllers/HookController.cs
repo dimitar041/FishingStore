@@ -1,5 +1,5 @@
 ﻿using FishingStore.Data;
-using FishingStore.Web.ViewModels;
+using FishingStore.Web.ViewModels.Hook;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,9 +15,6 @@ namespace FishingStore.Web.Controllers
                 .AsNoTracking()
                 .Select(h => new HookIndexViewModel()
                 {
-                    Description = h.Description,
-                    Size = h.Size,
-                    MaxWeight = h.MaxWeight,
                     FishingType = h.FishingType.ToString(),
                     Brand = h.Brand,
                     Model = h.Model,

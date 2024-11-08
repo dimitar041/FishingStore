@@ -1,5 +1,5 @@
 ﻿using FishingStore.Data;
-using FishingStore.Web.ViewModels;
+using FishingStore.Web.ViewModels.Reel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,9 +15,6 @@ namespace FishingStore.Web.Controllers
                 .AsNoTracking()
                 .Select(r => new ReelIndexViewModel()
                 {
-                    Description = r.Description,
-                    ReelSize = r.ReelSize,
-                    SpoolCapacity = r.SpoolCapacity,
                     FishingType = r.FishingType.ToString(),
                     Brand = r.Brand,
                     Model = r.Model,

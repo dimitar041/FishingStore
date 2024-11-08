@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FishingStore.Web.ViewModels.LineIndexViewModel>
+﻿@model IEnumerable<FishingStore.Web.ViewModels.Line.LineIndexViewModel>
 
 @{
     ViewBag.Title = "Fishing Lines";
@@ -15,12 +15,9 @@
                 <div class="card-body">
                     <h5 class="card-title">@line.Brand @line.Model</h5>
                     <p class="card-text">
-                        <strong>Diameter:</strong> @line.Diameter mm<br />
-                        <strong>Max Weight:</strong> @line.MaxWeight kg<br />
-                        <strong>Price:</strong> @line.Price.ToString("C")
+                        <strong>Price:</strong> @line.Price.ToString("C")<br />
                         <strong>Fishing Type:</strong> @line.FishingType
                     </p>
-                    <p class="card-text">@line.Description</p>
                     <input type="hidden" value="@line.Guid" class="rod-guid" />
 
                     <a href="@Url.Action("Details", "Line", new { id = line.Guid })" class="btn btn-primary">Details</a>

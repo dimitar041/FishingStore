@@ -1,10 +1,8 @@
-﻿using FishingStore.Data.Models.Enums;
-
-namespace FishingStore.Web.ViewModels
+﻿namespace FishingStore.Web.ViewModels.Rod
 {
-    public class RodIndexViewModel
+    public class RodDetailsViewModel
     {
-        public required string Guid { get; set; } 
+        public required string Guid { get; set; }
 
         public required string Brand { get; set; }
 

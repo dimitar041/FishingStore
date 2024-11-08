@@ -1,5 +1,5 @@
 ﻿using FishingStore.Data;
-using FishingStore.Web.ViewModels;
+using FishingStore.Web.ViewModels.Line;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,9 +15,6 @@ namespace FishingStore.Web.Controllers
                 .AsNoTracking()
                 .Select(l => new LineIndexViewModel()
                 {
-                    Description = l.Description,
-                    Diameter = l.Diameter,
-                    MaxWeight = l.MaxWeight,
                     FishingType = l.FishingType.ToString(),
                     Brand = l.Brand,
                     Model = l.Model,

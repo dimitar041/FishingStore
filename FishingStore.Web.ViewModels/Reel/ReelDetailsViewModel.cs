@@ -1,6 +1,6 @@
-﻿namespace FishingStore.Web.ViewModels
+﻿namespace FishingStore.Web.ViewModels.Reel
 {
-    public class ReelIndexViewModel
+    public class ReelDetailsViewModel
     {
         public required string Guid { get; set; }
 

@@ -1,4 +1,4 @@
-﻿namespace FishingStore.Web.ViewModels
+﻿namespace FishingStore.Web.ViewModels.Hook
 {
     public class HookIndexViewModel
     {
@@ -11,12 +11,6 @@
         public required string FishingType { get; set; }
 
         public decimal Price { get; set; }
-
-        public double MaxWeight { get; set; }
-
-        public int Size { get; set; }
-
-        public required string Description { get; set; }
 
         public string? ImageUrl { get; set; }
     }
