@@ -1,5 +1,7 @@
 ﻿using FishingStore.Data;
+using FishingStore.Data.Models;
 using FishingStore.Web.ViewModels.Hook;
+using FishingStore.Web.ViewModels.Line;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,9 +29,40 @@ namespace FishingStore.Web.Controllers
             return View(hooks);
         }
 
-        public async Task<IActionResult> Details()
+        [HttpGet]
+        public async Task<IActionResult> Details(string id)
         {
-            return View();
+            Guid hookGuid = Guid.Empty;
+            bool isGuidValid = this.IsGuidValid(id, ref hookGuid);
+
+            if (!isGuidValid)
+            {
+                return this.RedirectToAction(nameof(Index));
+            }
+
+            Hook? hook = await dbContext
+                .Hooks
+                .FirstOrDefaultAsync(x => x.Guid == hookGuid);
+
+            if (hook == null)
+            {
+                return this.RedirectToAction(nameof(Index));
+            }
+
+            HookDetailsViewModel model = new HookDetailsViewModel()
+            {
+                Brand = hook.Brand,
+                Model = hook.Model,
+                MaxWeight = hook.MaxWeight,
+                Description = hook.Description,
+                FishingType = hook.FishingType.ToString(),
+                Guid = hook.Guid.ToString(),
+                ImageUrl = hook.ImageUrl,
+                Size = hook.Size,
+                Price = hook.Price,
+            };
+
+            return View(model);
         }
     }
 }

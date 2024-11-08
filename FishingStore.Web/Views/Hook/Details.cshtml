@@ -1,5 +1,40 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using FishingStore.Common
+@model FishingStore.Web.ViewModels.Hook.HookDetailsViewModel
+
 @{
+    ViewData["Title"] = "Hook Details";
 }
+
+<h2>Hook Details</h2>
+
+<div class="hook-detail">
+    <h3>@Model.Brand - @Model.Model</h3>
+
+    <div class="hook-info">
+        <p><strong>Brand:</strong> @Model.Brand</p>
+        <p><strong>Model:</strong> @Model.Model</p>
+        <p><strong>Size:</strong> @Model.Size</p>
+        <p><strong>Max Weight:</strong> @Model.MaxWeight kg</p>
+        <p><strong>Fishing Type:</strong> @Model.FishingType</p>
+        <p><strong>Description:</strong> @Model.Description</p>
+        <p><strong>Price:</strong> @Model.Price.ToString("C")</p>
+
+        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+        {
+            <div class="image-container">
+                <img src="@Model.ImageUrl" alt="@Model.Brand @Model.Model" style="max-width: 100%; max-height: 300px;" />
+            </div>
+        }
+        else
+        {
+            <div class="image-container">
+                <img src="@EntityValidationConstants.Hook.NoImgHookUrl" alt="No image found!" style="max-width: 100%; max-height: 300px;" />
+            </div>
+        }
+    </div>
+
+    <div class="action-buttons">
+        <a href="@Url.Action("Edit", "Hook", new { id = Model.Guid })" class="btn btn-primary">Edit</a>
+        <a href="@Url.Action("Index", "Hook")" class="btn btn-secondary">Back to List</a>
+    </div>
+</div>
