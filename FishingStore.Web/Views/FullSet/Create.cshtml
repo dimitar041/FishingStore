@@ -1,0 +1,41 @@
+﻿@model FishingStore.Web.ViewModels.FullSet.FullSetCreateViewModel
+
+@{
+    ViewData["Title"] = "Create Full Set";
+}
+
+<h1>Create Full Set</h1>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="RodGuid">Select Rod</label>
+        <select asp-for="RodGuid" class="form-control" asp-items="@(new SelectList(Model.Rods, "Guid", "Brand"))">
+            <option value="">-- Select Rod --</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ReelGuid">Select Reel</label>
+        <select asp-for="ReelGuid" class="form-control" asp-items="@(new SelectList(Model.Reels, "Guid", "Brand"))">
+            <option value="">-- Select Reel --</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="LineGuid">Select Line</label>
+        <select asp-for="LineGuid" class="form-control" asp-items="@(new SelectList(Model.Lines, "Guid", "Brand"))">
+            <option value="">-- Select Line --</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="HookGuid">Select Hook</label>
+        <select asp-for="HookGuid" class="form-control" asp-items="@(new SelectList(Model.Hooks, "Guid", "Brand"))">
+            <option value="">-- Select Hook --</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create Full Set</button>
+</form>
+
+<a href="@Url.Action("Index", "FullSet")" class="btn btn-secondary">Back to Full Sets</a>   

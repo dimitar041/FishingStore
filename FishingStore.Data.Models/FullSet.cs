@@ -43,9 +43,6 @@ namespace FishingStore.Data.Models
 
         public decimal Price { get; set; }
 
-        [MaxLength(ImgUrlMaxLength)]
-        public string? ImageUrl { get; set; }
-
         public bool IsDeleted { get; set; }
     }
 }
