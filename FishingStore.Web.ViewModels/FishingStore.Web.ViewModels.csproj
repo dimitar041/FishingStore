@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\FishingStore.Common\FishingStore.Common.csproj" />
     <ProjectReference Include="..\FishingStore.Data.Models\FishingStore.Data.Models.csproj" />
+    <ProjectReference Include="..\FishingStore.Services.Mapping\FishingStore.Services.Mapping.csproj" />
   </ItemGroup>
 
 </Project>

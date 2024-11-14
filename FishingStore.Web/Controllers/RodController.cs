@@ -1,30 +1,19 @@
 ﻿using FishingStore.Data;
 using FishingStore.Data.Models;
+using FishingStore.Services.Data.Interfaces;
 using FishingStore.Web.ViewModels.Rod;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace FishingStore.Web.Controllers
 {
-    public class RodController(FishingStoreContext dbContext) : BaseController
+    public class RodController(FishingStoreContext dbContext , IRodService rodService) : BaseController
     {
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var rods = await dbContext
-                .Rods
-                .Where(r => r.IsDeleted == false)
-                .AsNoTracking()
-                .Select(r => new RodIndexViewModel()
-                {
-                    FishingType = r.FishingType.ToString(),
-                    Brand = r.Brand,
-                    Model = r.Model,
-                    Guid = r.Guid.ToString(),
-                    ImageUrl = r.ImageUrl,
-                    Price = r.Price,
-                })
-                .ToArrayAsync();
+            IEnumerable<RodIndexViewModel> rods =
+                await rodService.IndexGetAllAsync();
 
             return View(rods);
         }

@@ -1,8 +1,8 @@
-﻿using FishingStore.Data.Models.Enums;
+﻿using FishingStore.Services.Mapping;
 
 namespace FishingStore.Web.ViewModels.Rod
 {
-    public class RodIndexViewModel
+    public class  RodIndexViewModel : IMapFrom<Data.Models.Rod>
     {
         public required string Guid { get; set; }
 

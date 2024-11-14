@@ -15,7 +15,7 @@ namespace FishingStore.Data.Repository
             this.dbSet = this.dbContext.Set<TType>();
         }
 
-        public TType? GetById(TId id)
+        public TType GetById(TId id)
         {
             TType entity = this.dbSet
                 .Find(id);
@@ -23,59 +23,101 @@ namespace FishingStore.Data.Repository
             return entity;
         }
 
-        public Task<TType> GetByIdAsync(TId id)
+        public async Task<TType> GetByIdAsync(TId id)
         {
-            throw new NotImplementedException();
+            TType entity = await this.dbSet
+                .FindAsync(id);
+
+            return entity;
         }
 
         public IEnumerable<TType> GetAll()
         {
-            throw new NotImplementedException();
+            return this.dbSet.ToArray();
         }
 
-        public Task<IEnumerable<TType>> GetAllAsync()
+        public async Task<IEnumerable<TType>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await this.dbSet.ToArrayAsync();
+        }
+
+        public IQueryable<TType> GetAllAttached()
+        {
+            return this.dbSet.AsQueryable();
         }
 
         public void Add(TType item)
         {
-            throw new NotImplementedException();
+            this.dbSet.Add(item);
+            this.dbContext.SaveChanges();
         }
 
-        public Task AddAsync(TType item)
+        public async Task AddAsync(TType item)
         {
-            throw new NotImplementedException();
+            await this.dbSet.AddAsync(item);
+            await dbContext.SaveChangesAsync();
         }
 
         public bool Delete(TId id)
         {
-            throw new NotImplementedException();
+            TType entity = this.GetById(id);
+
+            if (entity == null)
+            {
+                return false;
+            }
+
+            this.dbSet.Remove(entity);
+            this.dbContext.SaveChanges();
+
+            return true;
         }
 
-        public Task<bool> DeleteAsync(TId id)
+        public async Task<bool> DeleteAsync(TId id)
         {
-            throw new NotImplementedException();
-        }
+            TType entity = await this.GetByIdAsync(id);
 
-        public bool SoftDelete(TId id)
-        {
-            throw new NotImplementedException();
-        }
+            if (entity == null)
+            {
+                return false;
+            }
 
-        public Task<bool> SoftDeleteAsync(TId id)
-        {
-            throw new NotImplementedException();
+            this.dbSet.Remove(entity);
+            await this.dbContext.SaveChangesAsync();
+
+            return true;
         }
 
         public bool Update(TType item)
         {
-            throw new NotImplementedException();
+            try
+            {
+                this.dbSet.Attach(item);
+                this.dbContext.Entry(item).State = EntityState.Modified;
+                this.dbContext.SaveChanges();
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
         }
 
-        public Task<bool> UpdateAsync(TType item)
+        public async Task<bool> UpdateAsync(TType item)
         {
-            throw new NotImplementedException();
+            try
+            {
+                this.dbSet.Attach(item);
+                this.dbContext.Entry(item).State = EntityState.Modified;
+                await this.dbContext.SaveChangesAsync();
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
         }
     }
 }

@@ -15,7 +15,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{5B7CC567-54A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FishingStore.Common", "FishingStore.Common\FishingStore.Common.csproj", "{2208E5F3-D651-4097-A124-C1483738BC1F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FishingStore.Web.ViewModels", "FishingStore.Web.ViewModels\FishingStore.Web.ViewModels.csproj", "{49C11393-2E14-41A3-A6C7-12BEC45A9BF3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FishingStore.Web.ViewModels", "FishingStore.Web.ViewModels\FishingStore.Web.ViewModels.csproj", "{49C11393-2E14-41A3-A6C7-12BEC45A9BF3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FishingStore.Web.Infrastructure", "FishingStore.Web.Infrastucture\FishingStore.Web.Infrastructure.csproj", "{D0987C21-87FE-4624-B226-A09D6C6E3CF8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{24D1BA5A-A4F6-4CDA-BC41-67A56F9FFCA2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FishingStore.Services.Data", "FishingStore.Services.Data\FishingStore.Services.Data.csproj", "{43D570ED-39E2-43CF-8390-9062807ED56A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FishingStore.Services.Mapping", "FishingStore.Services.Mapping\FishingStore.Services.Mapping.csproj", "{38904450-2CB3-4DCC-9B8F-0723E80DF372}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +51,18 @@ Global
 		{49C11393-2E14-41A3-A6C7-12BEC45A9BF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49C11393-2E14-41A3-A6C7-12BEC45A9BF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49C11393-2E14-41A3-A6C7-12BEC45A9BF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0987C21-87FE-4624-B226-A09D6C6E3CF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0987C21-87FE-4624-B226-A09D6C6E3CF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0987C21-87FE-4624-B226-A09D6C6E3CF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0987C21-87FE-4624-B226-A09D6C6E3CF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43D570ED-39E2-43CF-8390-9062807ED56A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43D570ED-39E2-43CF-8390-9062807ED56A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43D570ED-39E2-43CF-8390-9062807ED56A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43D570ED-39E2-43CF-8390-9062807ED56A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38904450-2CB3-4DCC-9B8F-0723E80DF372}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38904450-2CB3-4DCC-9B8F-0723E80DF372}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38904450-2CB3-4DCC-9B8F-0723E80DF372}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38904450-2CB3-4DCC-9B8F-0723E80DF372}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,6 +72,9 @@ Global
 		{4D3FD222-6871-4CD9-A935-F4172C894060} = {60365411-45C9-45BA-8647-D4E1B8A59823}
 		{30BE0A91-0344-491B-BECE-1D59AF4150E0} = {60365411-45C9-45BA-8647-D4E1B8A59823}
 		{49C11393-2E14-41A3-A6C7-12BEC45A9BF3} = {5B7CC567-54A1-454B-9D47-F9FD1140F1AC}
+		{D0987C21-87FE-4624-B226-A09D6C6E3CF8} = {5B7CC567-54A1-454B-9D47-F9FD1140F1AC}
+		{43D570ED-39E2-43CF-8390-9062807ED56A} = {24D1BA5A-A4F6-4CDA-BC41-67A56F9FFCA2}
+		{38904450-2CB3-4DCC-9B8F-0723E80DF372} = {24D1BA5A-A4F6-4CDA-BC41-67A56F9FFCA2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E42B6DD8-4419-4D57-85EC-C13D69CE661B}

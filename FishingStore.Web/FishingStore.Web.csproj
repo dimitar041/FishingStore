@@ -23,6 +23,7 @@
   <ItemGroup>
     <ProjectReference Include="..\FishingStore.Data.Models\FishingStore.Data.Models.csproj" />
     <ProjectReference Include="..\FishingStore.Data\FishingStore.Data.csproj" />
+    <ProjectReference Include="..\FishingStore.Services.Data\FishingStore.Services.Data.csproj" />
     <ProjectReference Include="..\FishingStore.Web.ViewModels\FishingStore.Web.ViewModels.csproj" />
   </ItemGroup>
 

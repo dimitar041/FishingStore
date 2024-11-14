@@ -10,6 +10,8 @@ public interface IRepository<TType, TId>
 
     Task<IEnumerable<TType>> GetAllAsync();
 
+    IQueryable<TType> GetAllAttached();
+
     void Add(TType item);
 
     Task AddAsync(TType item);
@@ -17,10 +19,6 @@ public interface IRepository<TType, TId>
     bool Delete(TId id);
 
     Task<bool> DeleteAsync(TId id);
-
-    bool SoftDelete(TId id);
-
-    Task<bool> SoftDeleteAsync(TId id);
 
     bool Update(TType item);
 

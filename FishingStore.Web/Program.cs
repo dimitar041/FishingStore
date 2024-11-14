@@ -3,6 +3,10 @@ using Microsoft.EntityFrameworkCore;
 
 using FishingStore.Data;
 using FishingStore.Data.Models;
+using FishingStore.Data.Repository;
+using FishingStore.Data.Repository.Interfaces;
+using FishingStore.Services.Data;
+using FishingStore.Services.Data.Interfaces;
 
 namespace FishingStore.Web
 {
@@ -20,6 +24,15 @@ namespace FishingStore.Web
 
             builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<FishingStoreContext>();
+
+            builder.Services.AddScoped<IRepository<Rod, Guid>, Repository<Rod, Guid>>();
+            builder.Services.AddScoped<IRepository<Reel, Guid>, Repository<Reel, Guid>>();
+            builder.Services.AddScoped<IRepository<Hook, Guid>, Repository<Hook, Guid>>();
+            builder.Services.AddScoped<IRepository<Line, Guid>, Repository<Line, Guid>>();
+            builder.Services.AddScoped<IRepository<FullSet, Guid>, Repository<FullSet, Guid>>();
+
+            builder.Services.AddScoped<IRodService, RodService>();
+
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
