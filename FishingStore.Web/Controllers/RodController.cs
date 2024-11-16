@@ -19,7 +19,7 @@ namespace FishingStore.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(string? id)
         {
             Guid rodGuid = Guid.Empty;
             bool isGuidValid = this.IsGuidValid(id, ref rodGuid);
@@ -28,34 +28,20 @@ namespace FishingStore.Web.Controllers
             {
                 return this.RedirectToAction(nameof(Index));
             }
-                
-            Rod? rod = await dbContext
-                .Rods
-                .FirstOrDefaultAsync(x => x.Guid == rodGuid);
 
-            if (rod == null)
+            RodDetailsViewModel? model =
+                await rodService.GetRodDetailsByIdAsync(rodGuid);
+
+            if (model == null)
             {
                 return this.RedirectToAction(nameof(Index));
             }
-
-            RodDetailsViewModel model = new RodDetailsViewModel()
-            {
-                Brand = rod.Brand,
-                Model = rod.Model,
-                Action = rod.Action,
-                Description = rod.Description,
-                FishingType = rod.FishingType.ToString(),
-                Guid = rod.Guid.ToString(),
-                ImageUrl = rod.ImageUrl,
-                Length = rod.Length,
-                Price = rod.Price,
-            };
 
             return View(model);
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(string? id)
         {
             Guid rodGuid = Guid.Empty;
             bool isGuidValid = this.IsGuidValid(id, ref rodGuid);
@@ -94,7 +80,7 @@ namespace FishingStore.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(RodEditViewModel model, string id)
+        public async Task<IActionResult> Edit(RodEditViewModel model, string? id)
         {
             if (!ModelState.IsValid)
             {

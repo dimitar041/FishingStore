@@ -6,5 +6,5 @@ public interface IRodService
 {
     Task<IEnumerable<RodIndexViewModel>> IndexGetAllAsync();
 
-    Task<RodDetailsViewModel> RodDetailsAsync(Guid id);
+    Task<RodDetailsViewModel> GetRodDetailsByIdAsync(Guid id);
 }
