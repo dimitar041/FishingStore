@@ -43,6 +43,8 @@ namespace FishingStore.Data.Models
         [MaxLength(ImgUrlMaxLength)]
         public string? ImageUrl { get; set; }
 
+        public string DisplayName => $"{Brand} {Model} - ${Price}";
+
         public bool IsDeleted { get; set; }
     }
 }

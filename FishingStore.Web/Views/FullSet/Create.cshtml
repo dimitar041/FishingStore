@@ -9,30 +9,34 @@
 <form asp-action="Create" method="post">
     <div class="form-group">
         <label asp-for="RodGuid">Select Rod</label>
-        <select asp-for="RodGuid" class="form-control" asp-items="@(new SelectList(Model.Rods, "Guid", "Brand"))">
+        <select asp-for="RodGuid" class="form-control" asp-items="@(new SelectList(Model.Rods, "Guid", "DisplayName"))">
             <option value="">-- Select Rod --</option>
         </select>
+        <span asp-validation-for="@Model.RodGuid" class="text-danger">Rod is required!</span>
     </div>
 
     <div class="form-group">
         <label asp-for="ReelGuid">Select Reel</label>
-        <select asp-for="ReelGuid" class="form-control" asp-items="@(new SelectList(Model.Reels, "Guid", "Brand"))">
+        <select asp-for="ReelGuid" class="form-control" asp-items="@(new SelectList(Model.Reels, "Guid", "DisplayName"))">
             <option value="">-- Select Reel --</option>
         </select>
+        <span asp-validation-for="@Model.ReelGuid" class="text-danger">Reel is required!</span>
     </div>
 
     <div class="form-group">
         <label asp-for="LineGuid">Select Line</label>
-        <select asp-for="LineGuid" class="form-control" asp-items="@(new SelectList(Model.Lines, "Guid", "Brand"))">
+        <select asp-for="LineGuid" class="form-control" asp-items="@(new SelectList(Model.Lines, "Guid", "DisplayName"))">
             <option value="">-- Select Line --</option>
         </select>
+        <span asp-validation-for="@Model.LineGuid" class="text-danger">Line is required!</span>
     </div>
 
     <div class="form-group">
         <label asp-for="HookGuid">Select Hook</label>
-        <select asp-for="HookGuid" class="form-control" asp-items="@(new SelectList(Model.Hooks, "Guid", "Brand"))">
+        <select asp-for="HookGuid" class="form-control" asp-items="@(new SelectList(Model.Hooks, "Guid", "DisplayName"))">
             <option value="">-- Select Hook --</option>
         </select>
+        <span asp-validation-for="@Model.HookGuid" class="text-danger">Hook is required!</span>
     </div>
 
     <button type="submit" class="btn btn-primary">Create Full Set</button>

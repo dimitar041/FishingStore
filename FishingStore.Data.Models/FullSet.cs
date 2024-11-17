@@ -21,26 +21,31 @@ namespace FishingStore.Data.Models
         [ForeignKey(nameof(UserGuid))]
         public virtual ApplicationUser ApplicationUser { get; set; } = null!;
 
-        public Guid? RodGuid { get; set; }
+        [Required]
+        public Guid RodGuid { get; set; }
 
         [ForeignKey(nameof(RodGuid))]
-        public virtual Rod? Rod { get; set; }
+        public virtual Rod Rod { get; set; }
 
-        public Guid? ReelGuid { get; set; }
+        [Required]
+        public Guid ReelGuid { get; set; }
 
         [ForeignKey(nameof(ReelGuid))]
-        public virtual Reel? Reel { get; set; }
+        public virtual Reel Reel { get; set; }
 
-        public Guid? LineGuid { get; set; }
+        [Required]
+        public Guid LineGuid { get; set; }
 
         [ForeignKey(nameof(LineGuid))]
-        public virtual Line? Line { get; set; }
+        public virtual Line Line { get; set; }
 
-        public Guid? HookGuid { get; set; }
+        [Required]
+        public Guid HookGuid { get; set; }
 
         [ForeignKey(nameof(HookGuid))] 
-        public virtual Hook? Hook { get; set; }
+        public virtual Hook Hook { get; set; }
 
+        [Required]
         public decimal Price { get; set; }
 
         public bool IsDeleted { get; set; }

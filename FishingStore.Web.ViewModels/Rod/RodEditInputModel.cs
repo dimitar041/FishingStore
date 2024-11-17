@@ -6,7 +6,7 @@ using static FishingStore.Common.ApplicationConstants;
 
 namespace FishingStore.Web.ViewModels.Rod
 {
-    public class RodEditViewModel
+    public class RodEditInputModel
     {
         public Guid Guid { get; set; }
 

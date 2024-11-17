@@ -51,11 +51,11 @@ namespace FishingStore.Web.Controllers
                 return this.RedirectToAction(nameof(Index));
             }
 
-            RodEditViewModel? model = await dbContext
+            RodEditInputModel? model = await dbContext
                 .Rods
                 .Where(r => r.IsDeleted == false && r.Guid == rodGuid)
                 .AsNoTracking()
-                .Select(r => new RodEditViewModel()
+                .Select(r => new RodEditInputModel()
                 {
                     Brand = r.Brand,
                     Model = r.Model,
@@ -74,13 +74,14 @@ namespace FishingStore.Web.Controllers
                 return this.RedirectToAction(nameof(Index));
             }
 
-            
 
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(RodEditViewModel model, string? id)
+#pragma warning disable MVC1004
+        public async Task<IActionResult> Edit(string? id, RodEditInputModel model)
+#pragma warning restore MVC1004
         {
             if (!ModelState.IsValid)
             {

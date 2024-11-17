@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FishingStore.Services.Data
 {
-    public class RodService : IRodService
+    public class RodService : BaseService, IRodService
     {
         private readonly IRepository<Rod, Guid> rodRepository;
 

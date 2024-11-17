@@ -31,16 +31,16 @@ namespace FishingStore.Web.Controllers
                 UserName = f.ApplicationUser.UserName!,
 
                 FullSetGuid = f.Guid,
-                RodBrand = f.Rod!.Brand,
+                RodBrand = f.Rod.Brand,
                 RodModel = f.Rod.Model,
                 RodPrice = f.Rod.Price,
-                ReelBrand = f.Reel!.Brand,
+                ReelBrand = f.Reel.Brand,
                 ReelModel = f.Reel.Model,
                 ReelPrice = f.Reel.Price,
-                LineBrand = f.Line!.Brand,
+                LineBrand = f.Line.Brand,
                 LineModel = f.Line.Model,
                 LinePrice = f.Line.Price,
-                HookBrand = f.Hook!.Brand,
+                HookBrand = f.Hook.Brand,
                 HookModel = f.Hook.Model,
                 HookPrice = f.Hook.Price,
                 TotalPrice = f.Price / 0.9m,
@@ -106,10 +106,10 @@ namespace FishingStore.Web.Controllers
 
         private decimal CalculateTotalPrice(FullSetCreateViewModel viewModel)
         {
-            var rodPrice = dbContext.Rods.FirstOrDefault(r => r.Guid == viewModel.RodGuid)?.Price ?? 0;
-            var reelPrice = dbContext.Reels.FirstOrDefault(r => r.Guid == viewModel.ReelGuid)?.Price ?? 0;
-            var linePrice = dbContext.Lines.FirstOrDefault(l => l.Guid == viewModel.LineGuid)?.Price ?? 0;
-            var hookPrice = dbContext.Hooks.FirstOrDefault(h => h.Guid == viewModel.HookGuid)?.Price ?? 0;
+            var rodPrice = dbContext.Rods.FirstOrDefault(r => r.Guid == viewModel.RodGuid)!.Price;
+            var reelPrice = dbContext.Reels.FirstOrDefault(r => r.Guid == viewModel.ReelGuid)!.Price;
+            var linePrice = dbContext.Lines.FirstOrDefault(l => l.Guid == viewModel.LineGuid)!.Price;
+            var hookPrice = dbContext.Hooks.FirstOrDefault(h => h.Guid == viewModel.HookGuid)!.Price;
 
             return (rodPrice + reelPrice + linePrice + hookPrice) * 0.9m;
         }
