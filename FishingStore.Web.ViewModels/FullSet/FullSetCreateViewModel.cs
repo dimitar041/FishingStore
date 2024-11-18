@@ -1,6 +1,4 @@
-﻿using FishingStore.Data.Models;
-
-namespace FishingStore.Web.ViewModels.FullSet
+﻿namespace FishingStore.Web.ViewModels.FullSet
 {
     public class FullSetCreateViewModel
     {

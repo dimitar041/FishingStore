@@ -43,3 +43,7 @@
 </form>
 
 <a href="@Url.Action("Index", "FullSet")" class="btn btn-secondary">Back to Full Sets</a>   
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

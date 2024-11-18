@@ -4,22 +4,22 @@
     {
         public Guid FullSetGuid { get; set; }
         public Guid UserGuid { get; set; }
-        public string UserName { get; set; } = string.Empty; 
+        public required string UserName { get; set; } 
 
-        public string RodBrand { get; set; } = string.Empty;
-        public string RodModel { get; set; } = string.Empty;
+        public required string RodBrand { get; set; } 
+        public required string RodModel { get; set; } 
         public decimal RodPrice { get; set; }
 
-        public string ReelBrand { get; set; } = string.Empty;
-        public string ReelModel { get; set; } = string.Empty;
+        public required string ReelBrand { get; set; } 
+        public required string ReelModel { get; set; } 
         public decimal ReelPrice { get; set; }
 
-        public string LineBrand { get; set; } = string.Empty;
-        public string LineModel { get; set; } = string.Empty;
+        public required string LineBrand { get; set; } 
+        public required string LineModel { get; set; } 
         public decimal LinePrice { get; set; }
 
-        public string HookBrand { get; set; } = string.Empty;
-        public string HookModel { get; set; } = string.Empty;
+        public required string HookBrand { get; set; } 
+        public required string HookModel { get; set; } 
         public decimal HookPrice { get; set; }
 
         public decimal TotalPrice { get; set; }  

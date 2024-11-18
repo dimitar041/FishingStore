@@ -17,7 +17,7 @@ namespace FishingStore.Web.Controllers
             var currentUser = await userManager.GetUserAsync(User);
 
             var fullSets = await dbContext.FullSets
-                .Where(f => f.UserGuid == currentUser!.Id)  
+                .Where(f => f.UserGuid == currentUser!.Id && f.IsDeleted == false)  
                 .Include(f => f.ApplicationUser)         
                 .Include(f => f.Rod)                     
                 .Include(f => f.Reel)
@@ -102,6 +102,84 @@ namespace FishingStore.Web.Controllers
             viewModel.Hooks = await dbContext.Hooks.ToListAsync();
 
             return View(viewModel);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(string? id)
+        {
+            Guid fullSetGuid = Guid.Empty;
+            bool isGuidValid = this.IsGuidValid(id, ref fullSetGuid);
+
+            if (!isGuidValid)
+            {
+                return this.RedirectToAction(nameof(Index));
+            }
+
+            var fullSet = await dbContext
+                .FullSets
+                .Include(f => f.ApplicationUser)
+                .Include(f => f.Rod)
+                .Include(f => f.Reel)
+                .Include(f => f.Line)
+                .Include(f => f.Hook)
+                .FirstOrDefaultAsync(f => f.Guid == fullSetGuid);
+
+            if (fullSet == null)
+            {
+                throw new ArgumentException("No Full Set with this id found!");
+            }
+
+            FullSetIndexViewModel model = new FullSetIndexViewModel()
+            {
+                UserGuid = fullSet.UserGuid,
+                UserName = fullSet.ApplicationUser.UserName!,
+
+                FullSetGuid = fullSet.Guid,
+                RodBrand = fullSet.Rod.Brand,
+                RodModel = fullSet.Rod.Model,
+                RodPrice = fullSet.Rod.Price,
+                ReelBrand = fullSet.Reel.Brand,
+                ReelModel = fullSet.Reel.Model,
+                ReelPrice = fullSet.Reel.Price,
+                LineBrand = fullSet.Line.Brand,
+                LineModel = fullSet.Line.Model,
+                LinePrice = fullSet.Line.Price,
+                HookBrand = fullSet.Hook.Brand,
+                HookModel = fullSet.Hook.Model,
+                HookPrice = fullSet.Hook.Price,
+                TotalPrice = fullSet.Price / 0.9m,
+                DiscountedPrice = fullSet.Price
+            };
+
+            return View(model); 
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(string? id)
+        {
+            Guid fullSetGuid = Guid.Empty;
+            bool isGuidValid = this.IsGuidValid(id, ref fullSetGuid);
+
+            if (!isGuidValid)
+            {
+                return this.RedirectToAction(nameof(Index));
+            }
+
+            var fullSet = await dbContext
+                .FullSets
+                .FirstOrDefaultAsync(f => f.Guid == fullSetGuid);
+
+            if (fullSet == null)
+            {
+                throw new ArgumentException("No Full Set with this id found!");
+            }
+
+            fullSet.IsDeleted = true;
+
+            await dbContext.SaveChangesAsync(); 
+
+            return RedirectToAction(nameof(Index));
         }
 
         private decimal CalculateTotalPrice(FullSetCreateViewModel viewModel)
