@@ -5,6 +5,9 @@ using FishingStore.Data;
 using FishingStore.Data.Models;
 using FishingStore.Services.Data.Interfaces;
 using FishingStore.Web.ViewModels.Rod;
+using FishingStore.Web.ViewModels.Reel;
+using static FishingStore.Common.EntityValidationConstants;
+using Rod = FishingStore.Data.Models.Rod;
 
 
 namespace FishingStore.Web.Controllers
@@ -53,33 +56,34 @@ namespace FishingStore.Web.Controllers
                 return this.RedirectToAction(nameof(Index));
             }
 
-            RodEditInputModel? model = await dbContext
+            Rod? rod = await dbContext
                 .Rods
-                .Where(r => r.IsDeleted == false && r.Guid == rodGuid)
-                .AsNoTracking()
-                .Select(r => new RodEditInputModel()
-                {
-                    Brand = r.Brand,
-                    Model = r.Model,
-                    Action = r.Action,
-                    Description = r.Description,
-                    FishingType = r.FishingType,
-                    ImageUrl = r.ImageUrl,
-                    Guid = rodGuid,
-                    Length = r.Length,
-                    Price = r.Price,
-                })
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(x => x.Guid == rodGuid && x.IsDeleted == false);
 
-            if (model == null)
+            if (rod == null)
             {
                 return this.RedirectToAction(nameof(Index));
             }
+
+            var model = new RodEditInputModel()
+            {
+                Guid = rod.Guid,
+                Brand = rod.Brand,
+                Model = rod.Model,
+                Length = rod.Length,
+                Action = rod.Action,
+                Description = rod.Description,
+                Price = rod.Price,
+                FishingType = rod.FishingType,
+                ImageUrl = rod.ImageUrl
+            };
+
 
             return View(model);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
 #pragma warning disable MVC1004
         public async Task<IActionResult> Edit(string? id, RodEditInputModel model)
 #pragma warning restore MVC1004
@@ -89,7 +93,10 @@ namespace FishingStore.Web.Controllers
                 return View(model);
             }
 
-            var rod = await dbContext.Rods.FindAsync(id);
+
+            Rod? rod = await dbContext
+                .Rods
+                .FirstOrDefaultAsync(x => x.Guid == model.Guid);
 
             if (rod == null)
             {

@@ -4,6 +4,7 @@ using FishingStore.Web.ViewModels.Reel;
 using FishingStore.Web.ViewModels.Rod;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using RouteValueDictionary = Microsoft.AspNetCore.Routing.RouteValueDictionary;
 
 namespace FishingStore.Web.Controllers
 {
@@ -139,7 +140,7 @@ namespace FishingStore.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(ReelAddInputModel model)
+        public async Task<IActionResult> Edit(string? id, ReelAddInputModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -166,7 +167,7 @@ namespace FishingStore.Web.Controllers
 
             await dbContext.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Details), new { id = reel.Guid });
+            return RedirectToAction(nameof(Details), new RouteValueDictionary { { "id", $"{id}" } });
         }
 
     }
