@@ -60,7 +60,7 @@ namespace FishingStore.Services.Data
                 };
             }
 
-            return model;
+            return model!;
         }
     }
 }

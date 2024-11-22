@@ -1,10 +1,11 @@
-﻿using FishingStore.Data;
-using FishingStore.Data.Models;
-using FishingStore.Web.ViewModels.FullSet;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+
+using FishingStore.Data;
+using FishingStore.Data.Models;
+using FishingStore.Web.ViewModels.FullSet;
 
 namespace FishingStore.Web.Controllers
 {
@@ -181,6 +182,100 @@ namespace FishingStore.Web.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Edit(string? id)
+        {
+            Guid fullSetGuid = Guid.Empty;
+            bool isGuidValid = this.IsGuidValid(id, ref fullSetGuid);
+
+            if (!isGuidValid)
+            {
+                return this.RedirectToAction(nameof(Index));
+            }
+
+
+            var fullSet = await dbContext.FullSets
+                .Include(f => f.Rod)
+                .Include(f => f.Reel)
+                .Include(f => f.Line)
+                .Include(f => f.Hook)
+                .FirstOrDefaultAsync(f => f.Guid == fullSetGuid);
+
+            if (fullSet == null)
+            {
+                return NotFound();
+            }
+
+
+            var rods = await dbContext.Rods.ToListAsync();
+            var reels = await dbContext.Reels.ToListAsync();
+            var lines = await dbContext.Lines.ToListAsync();
+            var hooks = await dbContext.Hooks.ToListAsync();
+
+
+            var viewModel = new FullSetCreateViewModel
+            {
+                Rods = rods,
+                Reels = reels,
+                Lines = lines,
+                Hooks = hooks,
+                RodGuid = fullSet.RodGuid,
+                ReelGuid = fullSet.ReelGuid,
+                LineGuid = fullSet.LineGuid,
+                HookGuid = fullSet.HookGuid
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(string? id, FullSetCreateViewModel viewModel)
+        {
+            Guid fullSetGuid = Guid.Empty;
+            bool isGuidValid = this.IsGuidValid(id, ref fullSetGuid);
+
+            if (!isGuidValid)
+            {
+                return this.RedirectToAction(nameof(Index));
+            }
+
+            if (ModelState.IsValid)
+            {
+                // Get the FullSet from the database
+                var fullSet = await dbContext.FullSets
+                    .FirstOrDefaultAsync(f => f.Guid == fullSetGuid);
+
+                if (fullSet == null)
+                {
+                    throw new ArgumentException("Full set with this Id not found!");
+                }
+
+                // Update the FullSet
+                fullSet.RodGuid = viewModel.RodGuid;
+                fullSet.ReelGuid = viewModel.ReelGuid;
+                fullSet.LineGuid = viewModel.LineGuid;
+                fullSet.HookGuid = viewModel.HookGuid;
+                fullSet.Price = CalculateTotalPrice(viewModel);
+
+                await dbContext.SaveChangesAsync();
+
+                return RedirectToAction(nameof(Index)); 
+            }
+
+
+            viewModel.Rods = await dbContext.Rods.ToListAsync();
+            viewModel.Reels = await dbContext.Reels.ToListAsync();
+            viewModel.Lines = await dbContext.Lines.ToListAsync();
+            viewModel.Hooks = await dbContext.Hooks.ToListAsync();
+
+            return View(viewModel);
+        }
+
+
 
         private decimal CalculateTotalPrice(FullSetCreateViewModel viewModel)
         {

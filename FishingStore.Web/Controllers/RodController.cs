@@ -1,13 +1,15 @@
-﻿using FishingStore.Data;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+
+using FishingStore.Data;
 using FishingStore.Data.Models;
 using FishingStore.Services.Data.Interfaces;
 using FishingStore.Web.ViewModels.Rod;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+
 
 namespace FishingStore.Web.Controllers
 {
-    public class RodController(FishingStoreContext dbContext , IRodService rodService) : BaseController
+    public class RodController(FishingStoreContext dbContext, IRodService rodService) : BaseController
     {
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -32,7 +34,7 @@ namespace FishingStore.Web.Controllers
             RodDetailsViewModel? model =
                 await rodService.GetRodDetailsByIdAsync(rodGuid);
 
-            if (model == null)
+            if (model == null!)
             {
                 return this.RedirectToAction(nameof(Index));
             }
@@ -63,7 +65,7 @@ namespace FishingStore.Web.Controllers
                     Description = r.Description,
                     FishingType = r.FishingType,
                     ImageUrl = r.ImageUrl,
-                    Guid = r.Guid,
+                    Guid = rodGuid,
                     Length = r.Length,
                     Price = r.Price,
                 })
@@ -73,7 +75,6 @@ namespace FishingStore.Web.Controllers
             {
                 return this.RedirectToAction(nameof(Index));
             }
-
 
             return View(model);
         }

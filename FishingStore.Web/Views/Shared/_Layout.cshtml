@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@using static FishingStore.Common.ApplicationConstants
+@{
+    int currYear = DateTime.Now.Year;
+    string footerNote = (ReleaseYear == currYear) ? $"{currYear}" : $"{ReleaseYear} - {currYear}";
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -54,7 +60,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2024 - FishingStore.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; @footerNote - FishingStore.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

@@ -1,0 +1,49 @@
+﻿@model FishingStore.Web.ViewModels.FullSet.FullSetCreateViewModel
+
+@{
+    ViewData["Title"] = "Edit Full Set";
+}
+
+<h1>Edit Full Set</h1>
+
+<form asp-action="Edit" method="post">
+    <div class="form-group">
+        <label asp-for="RodGuid">Select Rod</label>
+        <select asp-for="RodGuid" class="form-control" asp-items="@(new SelectList(Model.Rods, "Guid", "DisplayName", Model.RodGuid))">
+            <option value="">-- Select Rod --</option>
+        </select>
+        <span asp-validation-for="RodGuid" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ReelGuid">Select Reel</label>
+        <select asp-for="ReelGuid" class="form-control" asp-items="@(new SelectList(Model.Reels, "Guid", "DisplayName", Model.ReelGuid))">
+            <option value="">-- Select Reel --</option>
+        </select>
+        <span asp-validation-for="ReelGuid" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="LineGuid">Select Line</label>
+        <select asp-for="LineGuid" class="form-control" asp-items="@(new SelectList(Model.Lines, "Guid", "DisplayName", Model.LineGuid))">
+            <option value="">-- Select Line --</option>
+        </select>
+        <span asp-validation-for="LineGuid" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="HookGuid">Select Hook</label>
+        <select asp-for="HookGuid" class="form-control" asp-items="@(new SelectList(Model.Hooks, "Guid", "DisplayName", Model.HookGuid))">
+            <option value="">-- Select Hook --</option>
+        </select>
+        <span asp-validation-for="HookGuid" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+</form>
+
+<a href="@Url.Action("Index", "FullSet")" class="btn btn-secondary">Back to Full Sets</a>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
