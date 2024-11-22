@@ -31,7 +31,7 @@ namespace FishingStore.Data.Models
         public int Action { get; set; }
 
         [Required] 
-        [MaxLength(DescriptionMaxValue)]
+        [MaxLength(DescriptionMaxLength)]
         public string Description { get; set; } = null!;
 
         [Required]

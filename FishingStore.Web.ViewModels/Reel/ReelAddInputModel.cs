@@ -8,35 +8,35 @@ namespace FishingStore.Web.ViewModels.Reel
 {
     public class ReelAddInputModel
     {
-        [Required]
-        [MinLength(BrandMinLength)]
-        [MaxLength(BrandMaxLength)]
+        [Required(ErrorMessage = "Brand is required!")]
+        [MinLength(BrandMinLength, ErrorMessage = "Brand min length is 3 symbols!")]
+        [MaxLength(BrandMaxLength, ErrorMessage = "Brand max length is 30 symbols!")]
         public string Brand { get; set; } = null!;
 
-        [Required]
-        [MinLength(ModelMinLength)]
-        [MaxLength(ModelMaxLength)]
+        [Required(ErrorMessage = "Model is required!")]
+        [MinLength(ModelMinLength, ErrorMessage = "Model min length is 3 symbols!")]
+        [MaxLength(ModelMaxLength, ErrorMessage = "Model max length is 35 symbols!")]
         public string Model { get; set; } = null!;
 
-        [Required]
+        [Required(ErrorMessage = "Reel Size is required!")]
         public int ReelSize { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Spool Capacity is required!")]
         public int SpoolCapacity { get; set; }
 
-        [Required]
-        [MinLength(DescriptionMinValue)]
-        [MaxLength(DescriptionMaxValue)]
+        [Required(ErrorMessage = "Description is required!")]
+        [MinLength(DescriptionMinLength, ErrorMessage = "Description min length is 10 symbols!")]
+        [MaxLength(DescriptionMaxLength, ErrorMessage = "Description max length is 1000 symbols!")]
         public string Description { get; set; } = null!;
 
-        [Required]
-        [Range(typeof(decimal), PriceMinValue, PriceMaxValue)]
+        [Required(ErrorMessage = "Price is required!")]
+        [Range(typeof(decimal), PriceMinValue, PriceMaxValue, ErrorMessage = "Price must be in range 1.00 - 700.00!")]
         public decimal Price { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Fishing Type is required!")]
         public FishingType FishingType { get; set; }
 
-        [MaxLength(ImgUrlMaxLength)]
+        [MaxLength(ImgUrlMaxLength, ErrorMessage = "Image Url max length is 200 symbols!")]
         public string? ImageUrl { get; set; }
     }
 }

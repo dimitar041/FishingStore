@@ -34,7 +34,7 @@ namespace FishingStore.Data.Models
         public LineType LineType { get; set; }
 
         [Required]
-        [MaxLength(DescriptionMaxValue)]
+        [MaxLength(DescriptionMaxLength)]
         public string Description { get; set; } = null!;
 
         [Required]
