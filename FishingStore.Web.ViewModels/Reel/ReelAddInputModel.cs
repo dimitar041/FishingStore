@@ -8,8 +8,6 @@ namespace FishingStore.Web.ViewModels.Reel
 {
     public class ReelAddInputModel
     {
-        public Guid Guid { get; set; }
-
         [Required]
         [MinLength(BrandMinLength)]
         [MaxLength(BrandMaxLength)]

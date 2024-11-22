@@ -1,40 +1,50 @@
-﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
-
-@using FishingStore.Web.ViewModels.Rod
-@using FishingStore.Data.Models.Enums
-@model RodEditInputModel
+﻿@using FishingStore.Data.Models.Enums
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model FishingStore.Web.ViewModels.Rod.RodAddInputModel
 
 @{
     ViewData["Title"] = "Edit Rod";
 }
 
-<h2>Edit Rod</h2>
+<h1>Edit Rod</h1>
 
-<form asp-action="Edit" method="post" enctype="multipart/form-data">
+<form method="post">
+    @Html.AntiForgeryToken()
 
-    <input type="hidden" name="id" value="@Model.Guid" />
     <div class="form-group">
-        <label asp-for="@Model.Brand" class="control-label"></label>
-        <input asp-for="@Model.Brand" class="form-control" aria-required="true"/>
-        <span asp-validation-for="@Model.Brand" class="text-danger"></span>
+        <label asp-for="Brand" class="control-label"></label>
+        <input asp-for="Brand" class="form-control" />
+        <span asp-validation-for="Brand" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label asp-for="@Model.Model" class="control-label"></label>
-        <input asp-for="@Model.Model" class="form-control" aria-required="true"/>
-        <span asp-validation-for="@Model.Model" class="text-danger"></span>
+        <label asp-for="Model" class="control-label"></label>
+        <input asp-for="Model" class="form-control" />
+        <span asp-validation-for="Model" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label asp-for="@Model.Length" class="control-label"></label>
-        <input asp-for="@Model.Length" class="form-control" aria-required="true"/>
-        <span asp-validation-for="@Model.Length" class="text-danger"></span>
+        <label asp-for="Length" class="control-label"></label>
+        <input asp-for="Length" class="form-control" />
+        <span asp-validation-for="Length" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label asp-for="@Model.Action" class="control-label"></label>
-        <input asp-for="@Model.Action" class="form-control" aria-required="true"/>
-        <span asp-validation-for="@Model.Action" class="text-danger"></span>
+        <label asp-for="Action" class="control-label"></label>
+        <input asp-for="Action" class="form-control" />
+        <span asp-validation-for="Action" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Description" class="control-label"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Price" class="control-label"></label>
+        <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
     </div>
 
     <div class="form-group">
@@ -46,29 +56,12 @@
     </div>
 
     <div class="form-group">
-        <label asp-for="@Model.Description" class="control-label"></label>
-        <textarea asp-for="@Model.Description" class="form-control" aria-required="true" rows="5"></textarea>
-        <span asp-validation-for="@Model.Description" class="text-danger"></span>
+        <label asp-for="ImageUrl" class="control-label"></label>
+        <input asp-for="ImageUrl" class="form-control" />
+        <span asp-validation-for="ImageUrl" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
-        <label asp-for="@Model.Price" class="control-label"></label>
-        <input asp-for="@Model.Price" class="form-control" aria-required="true"/>
-        <span asp-validation-for="@Model.Price" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="@Model.ImageUrl" class="control-label"></label>
-        <input type="file" asp-for="@Model.ImageUrl" class="form-control" aria-required="false"/>
-        <span asp-validation-for="@Model.ImageUrl" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary">Save</button>
-        <a href="@Url.Action("Details", "Rod", new { id = Model.Guid })" class="btn btn-secondary">Cancel</a>
-    </div>
+    <button type="submit" class="btn btn-primary">Save Changes</button>
 </form>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+<a href="@Url.Action("Index", "Rod")">Back to list</a>

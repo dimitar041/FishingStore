@@ -40,23 +40,23 @@ namespace FishingStore.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Add(ReelAddInputModel model)
+        public async Task<IActionResult> Add(ReelAddInputModel inputModel)
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View(inputModel);
             }
 
             var reel = new Reel
             {
-                Brand = model.Brand,
-                Model = model.Model,
-                ReelSize = model.ReelSize,
-                SpoolCapacity = model.SpoolCapacity,
-                Description = model.Description,
-                Price = model.Price,
-                FishingType = model.FishingType,
-                ImageUrl = model.ImageUrl
+                Brand = inputModel.Brand,
+                Model = inputModel.Model,
+                ReelSize = inputModel.ReelSize,
+                SpoolCapacity = inputModel.SpoolCapacity,
+                Description = inputModel.Description,
+                Price = inputModel.Price,
+                FishingType = inputModel.FishingType,
+                ImageUrl = inputModel.ImageUrl
             };
 
             await dbContext.Reels.AddAsync(reel);
@@ -124,7 +124,6 @@ namespace FishingStore.Web.Controllers
 
             var model = new ReelAddInputModel()
             {
-                Guid = reel.Guid,
                 Brand = reel.Brand,
                 Model = reel.Model,
                 ReelSize = reel.ReelSize,
@@ -140,30 +139,30 @@ namespace FishingStore.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string? id, ReelAddInputModel model)
+        public async Task<IActionResult> Edit(string? id, ReelAddInputModel inputModel)
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View(inputModel);
             }
 
             Reel? reel = await dbContext
                 .Reels
-                .FirstOrDefaultAsync(x => x.Guid == model.Guid);
+                .FirstOrDefaultAsync(x => x.Guid.ToString() == id && x.IsDeleted == false);
 
             if (reel == null)
             {
-                return RedirectToAction(nameof(Index));
+                throw new ArgumentException("Invalid Id");
             }
 
-            reel.Brand = model.Brand;
-            reel.Model = model.Model;
-            reel.ReelSize = model.ReelSize;
-            reel.SpoolCapacity = model.SpoolCapacity;
-            reel.Description = model.Description;
-            reel.Price = model.Price;
-            reel.FishingType = model.FishingType;
-            reel.ImageUrl = model.ImageUrl;
+            reel.Brand = inputModel.Brand;
+            reel.Model = inputModel.Model;
+            reel.ReelSize = inputModel.ReelSize;
+            reel.SpoolCapacity = inputModel.SpoolCapacity;
+            reel.Description = inputModel.Description;
+            reel.Price = inputModel.Price;
+            reel.FishingType = inputModel.FishingType;
+            reel.ImageUrl = inputModel.ImageUrl;
 
             await dbContext.SaveChangesAsync();
 

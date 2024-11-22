@@ -6,10 +6,8 @@ using static FishingStore.Common.ApplicationConstants;
 
 namespace FishingStore.Web.ViewModels.Rod
 {
-    public class RodEditInputModel
+    public class RodAddInputModel
     {
-        public Guid Guid { get; set; }
-
         [Required]
         [MinLength(BrandMinLength)]
         [MaxLength(BrandMaxLength)]
@@ -32,6 +30,7 @@ namespace FishingStore.Web.ViewModels.Rod
         public string Description { get; set; } = null!;
 
         [Required]
+        [Range(typeof(decimal), PriceMinValue, PriceMaxValue)]
         public decimal Price { get; set; }
 
         [Required]

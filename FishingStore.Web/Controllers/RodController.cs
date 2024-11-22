@@ -65,9 +65,8 @@ namespace FishingStore.Web.Controllers
                 return this.RedirectToAction(nameof(Index));
             }
 
-            var model = new RodEditInputModel()
+            var model = new RodAddInputModel()
             {
-                Guid = rod.Guid,
                 Brand = rod.Brand,
                 Model = rod.Model,
                 Length = rod.Length,
@@ -84,33 +83,31 @@ namespace FishingStore.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-#pragma warning disable MVC1004
-        public async Task<IActionResult> Edit(string? id, RodEditInputModel model)
-#pragma warning restore MVC1004
+        public async Task<IActionResult> Edit(string? id, RodAddInputModel inputModel)
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View(inputModel);
             }
 
 
             Rod? rod = await dbContext
                 .Rods
-                .FirstOrDefaultAsync(x => x.Guid == model.Guid);
+                .FirstOrDefaultAsync(x => x.Guid.ToString() == id && x.IsDeleted == false);
 
             if (rod == null)
             {
-                throw new ArgumentException("Invalid id");
+                throw new ArgumentException("Invalid Id");
             }
 
-            rod.Brand = model.Brand;
-            rod.Model = model.Model;
-            rod.Length = model.Length;
-            rod.Action = model.Action;
-            rod.Description = model.Description;
-            rod.Price = model.Price;
-            rod.FishingType = model.FishingType;
-            rod.ImageUrl = model.ImageUrl;
+            rod.Brand = inputModel.Brand;
+            rod.Model = inputModel.Model;
+            rod.Length = inputModel.Length;
+            rod.Action = inputModel.Action;
+            rod.Description = inputModel.Description;
+            rod.Price = inputModel.Price;
+            rod.FishingType = inputModel.FishingType;
+            rod.ImageUrl = inputModel.ImageUrl;
 
             await dbContext.SaveChangesAsync();
 
