@@ -1,0 +1,70 @@
+﻿@using FishingStore.Data.Models.Enums
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model FishingStore.Web.ViewModels.Reel.ReelAddInputModel
+
+@{
+    ViewData["Title"] = "Add Reel";
+}
+
+<h1>Add New Reel</h1>
+
+<form method="post">
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        <label asp-for="Brand" class="control-label"></label>
+        <input asp-for="Brand" class="form-control" />
+        <span asp-validation-for="Brand" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Model" class="control-label"></label>
+        <input asp-for="Model" class="form-control" />
+        <span asp-validation-for="Model" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ReelSize" class="control-label"></label>
+        <input asp-for="ReelSize" class="form-control" />
+        <span asp-validation-for="ReelSize" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="SpoolCapacity" class="control-label"></label>
+        <input asp-for="SpoolCapacity" class="form-control" />
+        <span asp-validation-for="SpoolCapacity" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Description" class="control-label"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Price" class="control-label"></label>
+        <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="FishingType" class="control-label"></label>
+        <select asp-for="FishingType" class="form-control">
+            @foreach (var fishingType in Enum.GetValues(typeof(FishingType)).Cast<FishingType>())
+            {
+                <option value="@fishingType">@fishingType</option>
+            }
+        </select>
+        <span asp-validation-for="FishingType" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ImageUrl" class="control-label"></label>
+        <input asp-for="ImageUrl" class="form-control" />
+        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add Reel</button>
+</form>
+
+<a href="@Url.Action("Index", "Reel")">Back to list</a>

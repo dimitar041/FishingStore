@@ -30,7 +30,7 @@ namespace FishingStore.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(string? id)
         {
             Guid hookGuid = Guid.Empty;
             bool isGuidValid = this.IsGuidValid(id, ref hookGuid);

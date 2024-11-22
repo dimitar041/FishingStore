@@ -11,8 +11,8 @@ namespace FishingStore.Web.Controllers
 {
     public class FullSetController(FishingStoreContext dbContext, UserManager<ApplicationUser> userManager) : BaseController
     {
-        [Authorize]
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var currentUser = await userManager.GetUserAsync(User);
@@ -106,6 +106,7 @@ namespace FishingStore.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Delete(string? id)
         {
             Guid fullSetGuid = Guid.Empty;
@@ -156,6 +157,7 @@ namespace FishingStore.Web.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string? id)
         {
@@ -245,7 +247,6 @@ namespace FishingStore.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                // Get the FullSet from the database
                 var fullSet = await dbContext.FullSets
                     .FirstOrDefaultAsync(f => f.Guid == fullSetGuid);
 
@@ -254,7 +255,6 @@ namespace FishingStore.Web.Controllers
                     throw new ArgumentException("Full set with this Id not found!");
                 }
 
-                // Update the FullSet
                 fullSet.RodGuid = viewModel.RodGuid;
                 fullSet.ReelGuid = viewModel.ReelGuid;
                 fullSet.LineGuid = viewModel.LineGuid;
