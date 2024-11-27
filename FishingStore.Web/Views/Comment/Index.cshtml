@@ -1,0 +1,31 @@
+﻿@model FishingStore.Web.ViewModels.Comment.CommentIndexViewModel
+
+@{
+    ViewData["Title"] = "Comments for " + Model.FullSetName;
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>User</th>
+        <th>Comment</th>
+        <th>Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var comment in Model.Comments)
+    {
+        <tr>
+            <td>@comment.UserName</td>
+            <td>@comment.Content</td>
+            <td>@comment.CreatedAt.ToString("g")</td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<div>
+    <a href="@Url.Action("Create", "Comment", new { id = Model.FullSetGuid })" class="btn btn-success">Add Comment</a>
+</div>

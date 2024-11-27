@@ -1,0 +1,22 @@
+﻿@model FishingStore.Web.ViewModels.Comment.CommentCreateInputModel
+
+@{
+    ViewData["Title"] = "Add Comment";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="Create" method="post">
+    <input type="hidden" asp-for="FullSetGuid" />
+
+    <div class="form-group">
+        <label for="Content">Comment</label>
+        <textarea class="form-control" id="Content" name="Content" rows="3" required></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<div>
+    <a href="@Url.Action("Index", "Comment", new { id = Model.FullSetGuid })" class="btn btn-secondary">Back to Comments</a>
+</div>

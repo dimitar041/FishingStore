@@ -2,9 +2,8 @@
 {
     public class CommentViewModel
     {
-        public Guid CommentGuid { get; set; }
-        public string UserName { get; set; } = string.Empty;
-        public string Content { get; set; } = string.Empty;
+        public string UserName { get; set; } = null!;
+        public string Content { get; set; } = null!;
         public DateTime CreatedAt { get; set; }
     }
 }

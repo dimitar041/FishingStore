@@ -30,6 +30,8 @@ namespace FishingStore.Data
 
         public virtual DbSet<FullSet> FullSets { get; set; } = null!;
 
+        public virtual DbSet<Comment> Comments { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

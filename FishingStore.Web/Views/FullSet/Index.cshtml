@@ -51,7 +51,7 @@
                 @fullSet.DiscountedPrice.ToString("C")
             </td>
             <td>
-                <a href="@Url.Action("Details", "FullSet", new { id = fullSet.FullSetGuid })" class="btn btn-info">Details</a>
+                <a href="@Url.Action("Index", "Comment", new { id = fullSet.FullSetGuid })" class="btn btn-info">Details</a>
                 <a href="@Url.Action("Edit", "FullSet", new { id = fullSet.FullSetGuid })" class="btn btn-warning">Edit</a>
                 <a href="@Url.Action("Delete", "FullSet", new { id = fullSet.FullSetGuid })" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this full set?')">Delete</a>
             </td>
