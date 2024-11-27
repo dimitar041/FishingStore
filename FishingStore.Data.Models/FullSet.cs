@@ -46,6 +46,9 @@ namespace FishingStore.Data.Models
         [Required]
         public decimal Price { get; set; }
 
+        [Required]
+        public bool IsPublic { get; set; }
+
         public bool IsDeleted { get; set; }
     }
 }

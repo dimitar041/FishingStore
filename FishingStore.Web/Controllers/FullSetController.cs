@@ -18,7 +18,7 @@ namespace FishingStore.Web.Controllers
             var currentUser = await userManager.GetUserAsync(User);
 
             var fullSets = await dbContext.FullSets
-                .Where(f => f.UserGuid == currentUser!.Id && f.IsDeleted == false)  
+                .Where(f => (f.UserGuid == currentUser!.Id || f.IsPublic == true) && f.IsDeleted == false)  
                 .Include(f => f.ApplicationUser)         
                 .Include(f => f.Rod)                     
                 .Include(f => f.Reel)
@@ -60,7 +60,7 @@ namespace FishingStore.Web.Controllers
             var lines = await dbContext.Lines.ToListAsync();
             var hooks = await dbContext.Hooks.ToListAsync();
 
-            var viewModel = new FullSetCreateViewModel
+            var viewModel = new FullSetCreateInputModel
             {
                 Rods = rods,
                 Reels = reels,
@@ -74,7 +74,7 @@ namespace FishingStore.Web.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(FullSetCreateViewModel viewModel)
+        public async Task<IActionResult> Create(FullSetCreateInputModel viewModel)
         {
 
             var currentUser = await userManager.GetUserAsync(User);
@@ -88,7 +88,8 @@ namespace FishingStore.Web.Controllers
                     ReelGuid = viewModel.ReelGuid,
                     LineGuid = viewModel.LineGuid,
                     HookGuid = viewModel.HookGuid,
-                    Price = CalculateTotalPrice(viewModel) 
+                    Price = CalculateTotalPrice(viewModel),
+                    IsPublic = bool.Parse(viewModel.IsPublic)
                 };
 
                 dbContext.FullSets.Add(fullSet);
@@ -217,7 +218,7 @@ namespace FishingStore.Web.Controllers
             var hooks = await dbContext.Hooks.ToListAsync();
 
 
-            var viewModel = new FullSetCreateViewModel
+            var viewModel = new FullSetCreateInputModel
             {
                 Rods = rods,
                 Reels = reels,
@@ -235,7 +236,7 @@ namespace FishingStore.Web.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string? id, FullSetCreateViewModel viewModel)
+        public async Task<IActionResult> Edit(string? id, FullSetCreateInputModel viewModel)
         {
             Guid fullSetGuid = Guid.Empty;
             bool isGuidValid = this.IsGuidValid(id, ref fullSetGuid);
@@ -277,7 +278,7 @@ namespace FishingStore.Web.Controllers
 
 
 
-        private decimal CalculateTotalPrice(FullSetCreateViewModel viewModel)
+        private decimal CalculateTotalPrice(FullSetCreateInputModel viewModel)
         {
             var rodPrice = dbContext.Rods.FirstOrDefault(r => r.Guid == viewModel.RodGuid)!.Price;
             var reelPrice = dbContext.Reels.FirstOrDefault(r => r.Guid == viewModel.ReelGuid)!.Price;

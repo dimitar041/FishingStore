@@ -53,5 +53,12 @@
             public const int DescriptionMaxLength = 100;
             public const string NoImgHookUrl = "/img/no-img-hook-url.jpg";
         }
+
+        public static class Comment
+        {
+            public const int ContentMinLength = 10;
+            public const int ContentMaxLength = 1000;
+
+        }
     }
 }

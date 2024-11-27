@@ -2,7 +2,7 @@
 
 namespace FishingStore.Web.ViewModels.FullSet
 {
-    public class FullSetCreateViewModel
+    public class FullSetCreateInputModel
     {
         public IEnumerable<Data.Models.Rod> Rods { get; set; } = new List<Data.Models.Rod>();
         public IEnumerable<Data.Models.Reel> Reels { get; set; } = new List<Data.Models.Reel>();
@@ -20,5 +20,8 @@ namespace FishingStore.Web.ViewModels.FullSet
 
         [Required(ErrorMessage = "Hook is required!")]
         public Guid HookGuid { get; set; }
+
+        [Required] 
+        public string IsPublic { get; set; } = null!;
     }
 }

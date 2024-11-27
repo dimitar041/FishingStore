@@ -1,9 +1,9 @@
-﻿using FishingStore.Services.Mapping;
+﻿using Microsoft.EntityFrameworkCore;
+
 using FishingStore.Data.Models;
 using FishingStore.Data.Repository.Interfaces;
 using FishingStore.Services.Data.Interfaces;
 using FishingStore.Web.ViewModels.Rod;
-using Microsoft.EntityFrameworkCore;
 
 namespace FishingStore.Services.Data
 {
