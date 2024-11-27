@@ -38,6 +38,16 @@
         </select>
         <span asp-validation-for="HookGuid" class="text-danger"></span>
     </div>
+    
+    <div class="form-group">
+        <label asp-for="IsPublic">Do you want your Full Set be public?</label>
+        <select asp-for="IsPublic" class="form-control">
+            <option value="">-- Select Hook --</option>
+            <option value="True">Yes</option>
+            <option value="False">No</option>
+        </select>
+        <span asp-validation-for="@Model.IsPublic" class="text-danger"></span>
+    </div>
 
     <button type="submit" class="btn btn-primary">Save Changes</button>
 </form>

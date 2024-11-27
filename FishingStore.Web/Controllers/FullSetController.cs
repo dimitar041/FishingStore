@@ -17,6 +17,8 @@ namespace FishingStore.Web.Controllers
         {
             var currentUser = await userManager.GetUserAsync(User);
 
+            ViewData.Add("CurrentUserId", currentUser!.Id.ToString()); 
+
             var fullSets = await dbContext.FullSets
                 .Where(f => (f.UserGuid == currentUser!.Id || f.IsPublic == true) && f.IsDeleted == false)  
                 .Include(f => f.ApplicationUser)         
@@ -60,7 +62,7 @@ namespace FishingStore.Web.Controllers
             var lines = await dbContext.Lines.ToListAsync();
             var hooks = await dbContext.Hooks.ToListAsync();
 
-            var viewModel = new FullSetCreateInputModel
+            var inputModel = new FullSetCreateInputModel
             {
                 Rods = rods,
                 Reels = reels,
@@ -68,13 +70,13 @@ namespace FishingStore.Web.Controllers
                 Hooks = hooks
             };
 
-            return View(viewModel);
+            return View(inputModel);
         }
 
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(FullSetCreateInputModel viewModel)
+        public async Task<IActionResult> Create(FullSetCreateInputModel inputModel)
         {
 
             var currentUser = await userManager.GetUserAsync(User);
@@ -84,12 +86,12 @@ namespace FishingStore.Web.Controllers
                 var fullSet = new FullSet
                 {
                     UserGuid = currentUser!.Id, 
-                    RodGuid = viewModel.RodGuid,
-                    ReelGuid = viewModel.ReelGuid,
-                    LineGuid = viewModel.LineGuid,
-                    HookGuid = viewModel.HookGuid,
-                    Price = CalculateTotalPrice(viewModel),
-                    IsPublic = bool.Parse(viewModel.IsPublic)
+                    RodGuid = inputModel.RodGuid,
+                    ReelGuid = inputModel.ReelGuid,
+                    LineGuid = inputModel.LineGuid,
+                    HookGuid = inputModel.HookGuid,
+                    Price = CalculateTotalPrice(inputModel),
+                    IsPublic = bool.Parse(inputModel.IsPublic)
                 };
 
                 dbContext.FullSets.Add(fullSet);
@@ -98,12 +100,12 @@ namespace FishingStore.Web.Controllers
                 return RedirectToAction(nameof(Index)); 
             }
 
-            viewModel.Rods = await dbContext.Rods.ToListAsync();
-            viewModel.Reels = await dbContext.Reels.ToListAsync();
-            viewModel.Lines = await dbContext.Lines.ToListAsync();
-            viewModel.Hooks = await dbContext.Hooks.ToListAsync();
+            inputModel.Rods = await dbContext.Rods.ToListAsync();
+            inputModel.Reels = await dbContext.Reels.ToListAsync();
+            inputModel.Lines = await dbContext.Lines.ToListAsync();
+            inputModel.Hooks = await dbContext.Hooks.ToListAsync();
 
-            return View(viewModel);
+            return View(inputModel);
         }
 
         [HttpGet]
@@ -118,6 +120,8 @@ namespace FishingStore.Web.Controllers
                 return this.RedirectToAction(nameof(Index));
             }
 
+            var currentUser = await userManager.GetUserAsync(User);
+
             var fullSet = await dbContext
                 .FullSets
                 .Include(f => f.ApplicationUser)
@@ -130,6 +134,12 @@ namespace FishingStore.Web.Controllers
             if (fullSet == null)
             {
                 throw new ArgumentException("No Full Set with this id found!");
+            }
+
+
+            if (fullSet.UserGuid != currentUser!.Id)
+            {
+                return RedirectToAction("Index");
             }
 
             FullSetIndexViewModel model = new FullSetIndexViewModel()
@@ -170,6 +180,8 @@ namespace FishingStore.Web.Controllers
                 return this.RedirectToAction(nameof(Index));
             }
 
+            var currentUser = await userManager.GetUserAsync(User);
+
             var fullSet = await dbContext
                 .FullSets
                 .FirstOrDefaultAsync(f => f.Guid == fullSetGuid);
@@ -177,6 +189,11 @@ namespace FishingStore.Web.Controllers
             if (fullSet == null)
             {
                 throw new ArgumentException("No Full Set with this id found!");
+            }
+
+            if (fullSet.UserGuid != currentUser!.Id)
+            {
+                return RedirectToAction("Index");
             }
 
             fullSet.IsDeleted = true;
@@ -198,6 +215,8 @@ namespace FishingStore.Web.Controllers
                 return this.RedirectToAction(nameof(Index));
             }
 
+            var currentUser = await userManager.GetUserAsync(User); 
+
 
             var fullSet = await dbContext.FullSets
                 .Include(f => f.Rod)
@@ -211,6 +230,11 @@ namespace FishingStore.Web.Controllers
                 return NotFound();
             }
 
+            if (fullSet.UserGuid != currentUser!.Id)
+            {
+                return RedirectToAction("Index");
+            }
+
 
             var rods = await dbContext.Rods.ToListAsync();
             var reels = await dbContext.Reels.ToListAsync();
@@ -218,7 +242,7 @@ namespace FishingStore.Web.Controllers
             var hooks = await dbContext.Hooks.ToListAsync();
 
 
-            var viewModel = new FullSetCreateInputModel
+            var inputModel = new FullSetCreateInputModel
             {
                 Rods = rods,
                 Reels = reels,
@@ -227,24 +251,30 @@ namespace FishingStore.Web.Controllers
                 RodGuid = fullSet.RodGuid,
                 ReelGuid = fullSet.ReelGuid,
                 LineGuid = fullSet.LineGuid,
-                HookGuid = fullSet.HookGuid
+                HookGuid = fullSet.HookGuid,
+                IsPublic = fullSet.IsPublic.ToString()
             };
 
-            return View(viewModel);
+            return View(inputModel);
         }
 
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string? id, FullSetCreateInputModel viewModel)
+        public async Task<IActionResult> Edit(string? id, FullSetCreateInputModel inputModel)
         {
             Guid fullSetGuid = Guid.Empty;
             bool isGuidValid = this.IsGuidValid(id, ref fullSetGuid);
+
+
 
             if (!isGuidValid)
             {
                 return this.RedirectToAction(nameof(Index));
             }
+
+
+            var currentUser = await userManager.GetUserAsync(User);
 
             if (ModelState.IsValid)
             {
@@ -256,11 +286,18 @@ namespace FishingStore.Web.Controllers
                     throw new ArgumentException("Full set with this Id not found!");
                 }
 
-                fullSet.RodGuid = viewModel.RodGuid;
-                fullSet.ReelGuid = viewModel.ReelGuid;
-                fullSet.LineGuid = viewModel.LineGuid;
-                fullSet.HookGuid = viewModel.HookGuid;
-                fullSet.Price = CalculateTotalPrice(viewModel);
+
+                if (fullSet.UserGuid != currentUser!.Id)
+                {
+                    return RedirectToAction("Index");
+                }
+
+                fullSet.RodGuid = inputModel.RodGuid;
+                fullSet.ReelGuid = inputModel.ReelGuid;
+                fullSet.LineGuid = inputModel.LineGuid;
+                fullSet.HookGuid = inputModel.HookGuid;
+                fullSet.Price = CalculateTotalPrice(inputModel);
+                fullSet.IsPublic = bool.Parse(inputModel.IsPublic);
 
                 await dbContext.SaveChangesAsync();
 
@@ -268,12 +305,12 @@ namespace FishingStore.Web.Controllers
             }
 
 
-            viewModel.Rods = await dbContext.Rods.ToListAsync();
-            viewModel.Reels = await dbContext.Reels.ToListAsync();
-            viewModel.Lines = await dbContext.Lines.ToListAsync();
-            viewModel.Hooks = await dbContext.Hooks.ToListAsync();
+            inputModel.Rods = await dbContext.Rods.ToListAsync();
+            inputModel.Reels = await dbContext.Reels.ToListAsync();
+            inputModel.Lines = await dbContext.Lines.ToListAsync();
+            inputModel.Hooks = await dbContext.Hooks.ToListAsync();
 
-            return View(viewModel);
+            return View(inputModel);
         }
 
 

@@ -5,6 +5,7 @@ using FishingStore.Data;
 using FishingStore.Data.Models;
 using FishingStore.Web.ViewModels.Comment;
 using Microsoft.AspNetCore.Authorization;
+using AutoMapper;
 
 namespace FishingStore.Web.Controllers
 {
@@ -31,6 +32,7 @@ namespace FishingStore.Web.Controllers
             {
                 return this.RedirectToAction(nameof(Index));
             }
+
 
             var fullSet = await dbContext.FullSets
                 .Include(f => f.ApplicationUser)
