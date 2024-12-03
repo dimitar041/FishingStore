@@ -5,22 +5,12 @@ using FishingStore.Data;
 using FishingStore.Data.Models;
 using FishingStore.Web.ViewModels.Comment;
 using Microsoft.AspNetCore.Authorization;
-using AutoMapper;
 
 namespace FishingStore.Web.Controllers
 {
-    public class CommentController : BaseController
+    public class CommentController(FishingStoreContext dbContext, UserManager<ApplicationUser> userManager)
+        : BaseController
     {
-        private readonly FishingStoreContext dbContext;
-        private readonly UserManager<ApplicationUser> userManager;
-
-        public CommentController(FishingStoreContext dbContext, UserManager<ApplicationUser> userManager)
-        {
-            this.dbContext = dbContext;
-            this.userManager = userManager;
-        }
-
-        // GET: /Comment/Index/{fullSetGuid}
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> Index(string? id)
@@ -66,7 +56,6 @@ namespace FishingStore.Web.Controllers
             return View(model);
         }
 
-        // GET: /Comment/Create/{fullSetGuid}
         [HttpGet]
         [Authorize]
         public IActionResult Create(string? id)
@@ -87,7 +76,6 @@ namespace FishingStore.Web.Controllers
             return View(inputModel);
         }
 
-        // POST: /Comment/Create
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]

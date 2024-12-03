@@ -8,17 +8,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FishingStore.Web.Controllers
 {
-    public class CartController : BaseController
+    public class CartController(FishingStoreContext dbContext, UserManager<ApplicationUser> userManager)
+        : BaseController
     {
-        private readonly FishingStoreContext dbContext;
-        private readonly UserManager<ApplicationUser> userManager;
-
-        public CartController(FishingStoreContext dbContext, UserManager<ApplicationUser> userManager)
-        {
-            this.dbContext = dbContext;
-            this.userManager = userManager;
-        }
-
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> Index()
@@ -117,7 +109,7 @@ namespace FishingStore.Web.Controllers
             }
 
             await dbContext.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index), nameof(FullSet));
         }
 
         [HttpPost]

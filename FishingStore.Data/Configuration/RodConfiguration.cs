@@ -11,6 +11,11 @@ namespace FishingStore.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<Rod> builder)
         {
+            builder
+                .Property(r => r.Price)
+                .IsRequired()
+                .HasColumnType("decimal(18, 2)");
+
             builder.HasData(SeedRods());
         }
 
