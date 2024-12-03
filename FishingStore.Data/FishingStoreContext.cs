@@ -32,6 +32,10 @@ namespace FishingStore.Data
 
         public virtual DbSet<Comment> Comments { get; set; } = null!;
 
+        public virtual DbSet<Cart> Carts { get; set; } = null!;
+
+        public virtual DbSet<CartItem> CartItems { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

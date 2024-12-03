@@ -1,5 +1,4 @@
-﻿@using Microsoft.EntityFrameworkCore.Metadata.Internal
-@model IEnumerable<FishingStore.Web.ViewModels.FullSet.FullSetIndexViewModel>
+﻿@model IEnumerable<FishingStore.Web.ViewModels.FullSet.FullSetIndexViewModel>
 
 @{
     ViewData["Title"] = "Your Full Sets";
@@ -52,7 +51,8 @@
                 @fullSet.DiscountedPrice.ToString("C")
             </td>
             <td>
-                <a href="@Url.Action("Index", "Comment", new { id = fullSet.FullSetGuid })" class="btn btn-info">Comments</a>
+                    <a href="@Url.Action("Index", "Comment", new { id = fullSet.FullSetGuid })" class="btn btn-info">Comments</a>
+                    <a href="@Url.Action("AddToCart", "Cart", new { id = fullSet.FullSetGuid })" class="btn btn-primary">Add to Cart</a>
                 @if (ViewData["CurrentUserId"]!.ToString() == fullSet.UserGuid.ToString())
                 {
                     <a href="@Url.Action("Edit", "FullSet", new { id = fullSet.FullSetGuid })" class="btn btn-warning">Edit</a>
