@@ -2,12 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 
 using FishingStore.Data;
-using FishingStore.Data.Models;
 using FishingStore.Services.Data.Interfaces;
 using FishingStore.Web.ViewModels.Rod;
-using FishingStore.Web.ViewModels.Reel;
-using static FishingStore.Common.EntityValidationConstants;
 using Rod = FishingStore.Data.Models.Rod;
+using FishingStore.Web.ViewModels.Reel;
 
 
 namespace FishingStore.Web.Controllers
@@ -22,6 +20,28 @@ namespace FishingStore.Web.Controllers
 
             return View(rods);
         }
+
+        [HttpGet]
+        public IActionResult Add()
+        {
+            var model = new RodAddInputModel();
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Add(RodAddInputModel inputModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(inputModel);
+            }
+
+            await rodService.AddRodAsync(inputModel);
+
+            return RedirectToAction(nameof(Index));
+        }
+
 
         [HttpGet]
         public async Task<IActionResult> Details(string? id)
@@ -48,35 +68,25 @@ namespace FishingStore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(string? id)
         {
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
             Guid rodGuid = Guid.Empty;
             bool isGuidValid = this.IsGuidValid(id, ref rodGuid);
 
             if (!isGuidValid)
             {
-                return this.RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
             }
 
-            Rod? rod = await dbContext
-                .Rods
-                .FirstOrDefaultAsync(x => x.Guid == rodGuid && x.IsDeleted == false);
+            var model = await rodService.GetRodForEditAsync(rodGuid);
 
-            if (rod == null)
+            if (model == null)
             {
-                return this.RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
             }
-
-            var model = new RodAddInputModel()
-            {
-                Brand = rod.Brand,
-                Model = rod.Model,
-                Length = rod.Length,
-                Action = rod.Action,
-                Description = rod.Description,
-                Price = rod.Price,
-                FishingType = rod.FishingType,
-                ImageUrl = rod.ImageUrl
-            };
-
 
             return View(model);
         }
@@ -85,31 +95,20 @@ namespace FishingStore.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string? id, RodAddInputModel inputModel)
         {
+            Guid rodGuid = Guid.Empty;
+            bool isGuidValid = this.IsGuidValid(id, ref rodGuid);
+
+            if (!isGuidValid)
+            {
+                return this.RedirectToAction(nameof(Index));
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(inputModel);
             }
 
-
-            Rod? rod = await dbContext
-                .Rods
-                .FirstOrDefaultAsync(x => x.Guid.ToString() == id && x.IsDeleted == false);
-
-            if (rod == null)
-            {
-                throw new ArgumentException("Invalid Id");
-            }
-
-            rod.Brand = inputModel.Brand;
-            rod.Model = inputModel.Model;
-            rod.Length = inputModel.Length;
-            rod.Action = inputModel.Action;
-            rod.Description = inputModel.Description;
-            rod.Price = inputModel.Price;
-            rod.FishingType = inputModel.FishingType;
-            rod.ImageUrl = inputModel.ImageUrl;
-
-            await dbContext.SaveChangesAsync();
+            await rodService.UpdateRodAsync(rodGuid, inputModel);
 
             return RedirectToAction(nameof(Details), nameof(Rod), new RouteValueDictionary { { "id", $"{id}" } });
         }
