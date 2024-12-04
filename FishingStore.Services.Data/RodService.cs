@@ -7,19 +7,11 @@ using FishingStore.Web.ViewModels.Rod;
 
 namespace FishingStore.Services.Data
 {
-    public class RodService : BaseService, IRodService
+    public class RodService(IRepository<Rod, Guid> rodRepository) : BaseService, IRodService
     {
-        private readonly IRepository<Rod, Guid> rodRepository;
-
-        public RodService(IRepository<Rod, Guid> rodRepository)
-        {
-            this.rodRepository = rodRepository;
-        }
-
-
         public async Task<IEnumerable<RodIndexViewModel>> IndexGetAllAsync()
         {
-            RodIndexViewModel[] rods = await this.rodRepository
+            RodIndexViewModel[] rods = await rodRepository
                 .GetAllAttached()
                 .Where(r => r.IsDeleted == false)
                 .AsNoTracking()
@@ -39,7 +31,7 @@ namespace FishingStore.Services.Data
 
         public async Task<RodDetailsViewModel> GetRodDetailsByIdAsync(Guid id)
         {
-            Rod? rod = await this.rodRepository
+            Rod? rod = await rodRepository
                 .GetByIdAsync(id);
 
 
