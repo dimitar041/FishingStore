@@ -14,6 +14,8 @@ namespace FishingStore.Services.Data.Interfaces
 
         Task<bool> UpdateRodAsync(Guid id, RodAddInputModel inputModel);
 
+        Task<RodDeleteViewModel> GetRodDeleteViewModelByIdAsync(Guid rodGuid);
+
         Task<bool> DeleteRodAsync(Guid id);
     }
 }

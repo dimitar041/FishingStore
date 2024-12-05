@@ -1,0 +1,18 @@
+﻿@model FishingStore.Web.ViewModels.Rod.RodDeleteViewModel
+
+@{
+    ViewData["Title"] = "Delete Rod";
+}
+
+<h2>Are you sure you want to delete the rod?</h2>
+
+
+<div>
+    <h3>@Model.Brand @Model.Model</h3>
+</div>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" name="id" value="@Model.Guid" />
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a href="@Url.Action("Details", "Rod", new { id = Model.Guid })" class="btn btn-secondary">Cancel</a>
+</form>

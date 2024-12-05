@@ -148,9 +148,9 @@ namespace FishingStore.Services.Data
                 rod.Brand = inputModel.Brand;
                 rod.Model = inputModel.Model;
                 rod.Action = inputModel.Action;
-                rod.Length = inputModel.Length;
                 rod.Description = inputModel.Description;
                 rod.Price = inputModel.Price;
+                rod.Length = inputModel.Length;
                 rod.FishingType = inputModel.FishingType;
                 rod.ImageUrl = inputModel.ImageUrl;
 
@@ -168,7 +168,25 @@ namespace FishingStore.Services.Data
             }
         }
 
-        // Delete a rod (soft delete)
+        public async Task<RodDeleteViewModel> GetRodDeleteViewModelByIdAsync(Guid rodGuid)
+        {
+            var rod = await rodRepository.GetByIdAsync(rodGuid);
+
+            if (rod == null)
+            {
+                return null;
+            }
+
+            var model = new RodDeleteViewModel
+            {
+                Guid = rod.Guid.ToString(),
+                Brand = rod.Brand,
+                Model = rod.Model
+            };
+
+            return model;
+        }
+
         public async Task<bool> DeleteRodAsync(Guid id)
         {
             try

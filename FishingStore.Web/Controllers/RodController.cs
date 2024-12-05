@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 using FishingStore.Data;
 using FishingStore.Services.Data.Interfaces;
 using FishingStore.Web.ViewModels.Rod;
 using Rod = FishingStore.Data.Models.Rod;
-using FishingStore.Web.ViewModels.Reel;
 
 
 namespace FishingStore.Web.Controllers
@@ -112,5 +110,62 @@ namespace FishingStore.Web.Controllers
 
             return RedirectToAction(nameof(Details), nameof(Rod), new RouteValueDictionary { { "id", $"{id}" } });
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(string? id)
+        {
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            Guid rodGuid = Guid.Empty;
+            bool isGuidValid = this.IsGuidValid(id, ref rodGuid);
+
+            if (!isGuidValid)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            var rod = await rodService.GetRodDeleteViewModelByIdAsync(rodGuid);
+
+            if (rod == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(rod);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(string? id, RodDeleteViewModel model)
+        {
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            Guid rodGuid = Guid.Empty;
+            bool isGuidValid = this.IsGuidValid(id, ref rodGuid);
+
+            if (!isGuidValid)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            bool isDeleted = await rodService.DeleteRodAsync(rodGuid);
+
+            if (isDeleted)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return RedirectToAction(nameof(Index));
+
+        }
     }
 }
+
+
+
